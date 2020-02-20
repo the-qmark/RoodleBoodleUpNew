@@ -36,7 +36,6 @@ public class RoodleAIMovement : MonoBehaviour
         {
             if (transform.position.x >= newPosition.x)
             {
-                Debug.Log("RIGHT");
                 SetNewRotateAndPosition(out newRotate, out newPosition);
             }
         }
@@ -44,7 +43,6 @@ public class RoodleAIMovement : MonoBehaviour
         {
             if (transform.position.x <= newPosition.x)
             {
-                Debug.Log("LEFT");
                 SetNewRotateAndPosition(out newRotate, out newPosition);
             }
         }
@@ -67,10 +65,6 @@ public class RoodleAIMovement : MonoBehaviour
 
         int xIndex = Random.Range(0, xPosition.Length);
         _newPos = new Vector3(xPosition[xIndex] * dir, 0, 0);
-
-        Debug.Log($"Dir = {dir}");
-        Debug.Log($"New rotate = {-zRotation[zIndex] * dir}");
-        Debug.Log($"New position = {xPosition[xIndex] * dir}");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
