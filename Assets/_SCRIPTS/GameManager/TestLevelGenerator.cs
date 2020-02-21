@@ -12,7 +12,7 @@ public class TestLevelGenerator : MonoBehaviour
     
     void Start()
     {
-        currentY = DeltaY;
+        currentY = 144.92f;
         for (int i = 0; i < CounOfLine; i++)
         {
             Instantiate(MainLine, new Vector3(0, currentY, 0), Quaternion.identity);
