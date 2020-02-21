@@ -4,26 +4,23 @@ using UnityEngine;
 
 public class RoodleAIScale : MonoBehaviour
 {
-    public float DeltaScale;
-    private Vector3 reduceScaleVector;
+    public float DeltaDownScale;
+    private Vector3 downScaleVector;
 
     private void Start()
     {
-        reduceScaleVector = new Vector3(DeltaScale, DeltaScale, DeltaScale);
+        downScaleVector = new Vector3(DeltaDownScale, DeltaDownScale, DeltaDownScale);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            ReduceScale();
-        }
+
     }
 
-    private void ReduceScale()
+    public void OnReachedNewStage()
     {
         if (transform.localScale.x <= 2)
             return;
-        transform.localScale -= reduceScaleVector;
+        transform.localScale -= downScaleVector;
     }
 }

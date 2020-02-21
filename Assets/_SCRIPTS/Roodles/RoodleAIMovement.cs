@@ -5,7 +5,10 @@ using UnityEngine;
 public class RoodleAIMovement : MonoBehaviour
 {
     public float MovementSpeed;
+    private float _increaseMovementSpeed;
+
     public float RotateSpeed;
+    private float _increaseRotateSpeed;
 
     private float[] xPosition = { 5f, 10, 15f, 20f };
     private float[] zRotation = { 30, 40, 50, 60, 70, 80 };
@@ -73,5 +76,11 @@ public class RoodleAIMovement : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+    }
+
+    public void OnReachedNewStage()
+    {
+        MovementSpeed += _increaseMovementSpeed;
+        RotateSpeed += _increaseRotateSpeed;
     }
 }

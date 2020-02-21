@@ -7,6 +7,7 @@ public class RoodleController : MonoBehaviour
 {
     public float Speed;
     private float _currentSpeed = 0;
+    private float _increaseSpeed;
 
     public float Sensitivity;
     private float _currentSensitivity = 0;
@@ -57,5 +58,10 @@ public class RoodleController : MonoBehaviour
     {
         _currentSpeed = Speed;
         _currentSensitivity = Sensitivity;
+    }
+
+    public void OnReachedNewStage()
+    {
+        _currentSpeed += _increaseSpeed;
     }
 }
