@@ -22,12 +22,13 @@ public class RoodleTriggerEnter : MonoBehaviour
     {
         if (collision.CompareTag("Hexagon"))
         {
-            GameOver?.Invoke();
+            //GameOver?.Invoke();
         }
 
         if (collision.CompareTag("NewStage"))
         {
             ReachedNewStage?.Invoke();
+            Destroy(collision.gameObject);
         }
     }
 
@@ -36,8 +37,8 @@ public class RoodleTriggerEnter : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void OnReachedNewStage()
-    {
+    //public void OnReachedNewStage()
+    //{
 
-    }
+    //}
 }

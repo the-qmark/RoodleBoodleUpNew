@@ -5,63 +5,59 @@ using UnityEngine.Events;
 
 public class RoodleController : MonoBehaviour
 {
-    public float Speed;
-    private float _currentSpeed = 0;
-    private float _increaseSpeed;
+    [SerializeField] private float _speed; // скорость полета
+    [SerializeField] private float _increaseSpeed; // на сколько увелисть скорость при достижении нового этапа
 
-    public float Sensitivity;
-    private float _currentSensitivity = 0;
+    [SerializeField] private float _sensitivity; // чувствительность поворота
 
-    private Camera cam;
-    private Rigidbody2D rb;
+    [SerializeField] private Camera cam;
+    private Rigidbody2D _rigibody;
 
-    private Vector3 currentPos;
-    private Vector3 nextPos;
-    private float deltaRot;
+    private Vector3 _currentMousePos;
+    private Vector3 _nextMousePos;
+    private float _deltaRot;
 
 
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        cam = Camera.main;
+        _rigibody = GetComponent<Rigidbody2D>();
+        //cam = Camera.main;
     }
 
 
-    void Update()
+    private void Update()
     {
 
 #if UNITY_EDITOR
         if(Input.GetMouseButtonDown(0))
         {
-            currentPos = cam.ScreenToWorldPoint(Input.mousePosition);
+            _currentMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         }
 
         if (Input.GetMouseButton(0))
         {
-            nextPos = cam.ScreenToWorldPoint(Input.mousePosition);
-            deltaRot = currentPos.x - nextPos.x;
-            //transform.Rotate(Vector3.forward, deltaRot * Time.deltaTime);
-            currentPos = nextPos;
-
-            transform.Rotate(Vector3.forward, deltaRot * _currentSensitivity * Time.deltaTime);
+            _nextMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+            _deltaRot = _currentMousePos.x - _nextMousePos.x;
+            _currentMousePos = _nextMousePos;
+            transform.Rotate(Vector3.forward, _deltaRot * _sensitivity * Time.deltaTime);
         }
 #endif
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = transform.up * _currentSpeed * Time.fixedDeltaTime;
+        _rigibody.velocity = transform.up * _speed * Time.fixedDeltaTime;
     }
 
 
-    public void OnGameStarted()
-    {
-        _currentSpeed = Speed;
-        _currentSensitivity = Sensitivity;
-    }
+    //public void OnGameStarted()
+    //{
+    //    _currentSpeed = Speed;
+    //    _currentSensitivity = Sensitivity;
+    //}
 
     public void OnReachedNewStage()
     {
-        _currentSpeed += _increaseSpeed;
+        _speed += _increaseSpeed;
     }
 }

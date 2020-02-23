@@ -14,7 +14,10 @@ public class RoodleAIScale : MonoBehaviour
 
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            OnReachedNewStage();
+        }
     }
 
     public void OnReachedNewStage()

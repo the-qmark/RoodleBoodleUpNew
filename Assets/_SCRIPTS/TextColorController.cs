@@ -5,13 +5,20 @@ using TMPro;
 
 public class TextColorController : MonoBehaviour
 {
-    public ScriptableText scriptableText;
+    [SerializeField] private ScriptableText _scriptableText;
 
-    private TextMeshProUGUI text;
+    private TMP_Text _text;
+    
 
     void Start()
     {
-        TryGetComponent<TextMeshProUGUI>(out text);
-        text.color = scriptableText.Color;
+        TryGetComponent<TMP_Text>(out _text);
+
+        float _r = _scriptableText.Color.r;
+        float _g = _scriptableText.Color.g;
+        float _b = _scriptableText.Color.b;
+        float _a = _text.color.a;
+
+        _text.color = new Color(_r, _g, _b, _a);   
     }
 }
