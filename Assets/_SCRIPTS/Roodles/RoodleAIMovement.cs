@@ -26,9 +26,13 @@ public class RoodleAIMovement : MonoBehaviour
 
     private bool isStop;
 
+    private CoinSpawner _coinSpawner;
+
+
     private void Start()
     {
         //dir = Random.Range(1, 10);
+        _coinSpawner = GetComponent<CoinSpawner>();
         _dir = Random.Range(1, 10) < 5 ? -1 : 1; // -1 влево
         _rigibody = GetComponent<Rigidbody2D>();
         SetNewRotateAndPosition(out _newRotate, out _newPosition);
@@ -38,15 +42,13 @@ public class RoodleAIMovement : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.y > _roodle.position.y + 250)
+        if (!isStop && transform.position.y > _roodle.position.y + 250)
         {
             isStop = true;
             StopMovement();
         }
-
-        if (isStop && transform.position.y > _roodle.position.y + 200)
-            return;
-        else
+        
+        if (isStop && transform.position.y < _roodle.position.y + 201)
         {
             isStop = false;
             StartMovement();
@@ -94,17 +96,22 @@ public class RoodleAIMovement : MonoBehaviour
         
     }
 
-    private void StopMovement()
-    {
-        _currentMovementSpeed = 0;
-        _currentRotateSpeed = 0;
-    }
 
     private void StartMovement()
     {
         _currentMovementSpeed = _movementSpeed;
         _currentRotateSpeed = _rotateSpeed;
+        _coinSpawner.StartCoinSpawn();
     }
+
+
+    private void StopMovement()
+    {
+        _currentMovementSpeed = 0;
+        _currentRotateSpeed = 0;
+        _coinSpawner.StopCoinSpawn();
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -114,10 +121,13 @@ public class RoodleAIMovement : MonoBehaviour
         }
     }
 
+
     public void OnReachedNewStage()
     {
         _movementSpeed += _increaseMovementSpeed;
         _rotateSpeed += _increaseRotateSpeed;
-        StartMovement();
+
+        _currentMovementSpeed = _movementSpeed;
+        _currentRotateSpeed = _rotateSpeed;
     }
 }

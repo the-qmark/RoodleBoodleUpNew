@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     {
         if (Roodle.position.y >= transform.position.y && !isLookAt)
         {
-            YOffset = Mathf.Abs(transform.position.y - Roodle.position.y);
+            //YOffset = Mathf.Abs(transform.position.y - Roodle.position.y);
             isLookAt = true;
         }
     }
@@ -32,6 +32,6 @@ public class CameraController : MonoBehaviour
             return;
 
         newPos = new Vector3(0, Roodle.position.y + YOffset, -10);
-        transform.position = Vector3.Lerp(transform.position, newPos, 1f);
+        transform.position = newPos;
     }
 }

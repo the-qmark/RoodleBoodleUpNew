@@ -6,7 +6,8 @@ using TMPro;
 [CreateAssetMenu(menuName = "Create Scriptable Text")]
 public class ScriptableText : ScriptableObject
 {
-    public Color Color;
+    //public Color Color;
+    public Material material;
 
     void Start()
     {

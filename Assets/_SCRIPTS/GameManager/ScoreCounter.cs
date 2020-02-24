@@ -19,7 +19,7 @@ public class ScoreCounter : MonoBehaviour
     {
         _currentScore = 0;
         _currretnScoreText.text = _currentScore.ToString("000000");
-        _newStageLimit = 100;
+        _newStageLimit = 10;
     }
 
     void Update()
@@ -30,7 +30,7 @@ public class ScoreCounter : MonoBehaviour
         if ((int)_currentScore >= _newStageLimit)
         {
             CreatedNewStage?.Invoke();
-            _newStageLimit += 100;
+            _newStageLimit += 10;
         }
             
     }

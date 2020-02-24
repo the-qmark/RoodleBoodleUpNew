@@ -30,6 +30,11 @@ public class RoodleTriggerEnter : MonoBehaviour
             ReachedNewStage?.Invoke();
             Destroy(collision.gameObject);
         }
+
+        if (collision.TryGetComponent<Coin>(out Coin _coin))
+        {
+            _coin.PickUp();
+        }
     }
 
     public void OnGameOver()

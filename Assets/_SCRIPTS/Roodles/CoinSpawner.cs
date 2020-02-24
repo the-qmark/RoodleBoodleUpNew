@@ -4,26 +4,41 @@ using UnityEngine;
 
 public class CoinSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject _coinPrefab;
+    [SerializeField] Coin _coinPrefab;
 
 
-    void Start()
+    public void StartCoinSpawn()
     {
-        
+        StartCoroutine(SpawnCoin());
+        Debug.Log("StartCour");
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void StopCoinSpawn()
     {
-        
+        //StopCoroutine(SpawnCoin());
+        StopAllCoroutines();
+        Debug.Log("StopCour");
     }
+
 
     private IEnumerator SpawnCoin()
     {
         WaitForSeconds _delay = new WaitForSeconds(2f);
 
+        float _chance;
+
+        Debug.Log("Cour + " + gameObject.name);
+
         while (true)
         {
+            _chance = Random.Range(0, 10);
+
+            if (_chance >= 5)
+                Instantiate(_coinPrefab, transform.position, Quaternion.identity);
+
+            Debug.Log("COIN + " + Time.time);
+            
             yield return _delay;
         }
     }

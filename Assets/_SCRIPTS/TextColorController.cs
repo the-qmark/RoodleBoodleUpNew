@@ -14,9 +14,11 @@ public class TextColorController : MonoBehaviour
     {
         TryGetComponent<TMP_Text>(out _text);
 
-        float _r = _scriptableText.Color.r;
-        float _g = _scriptableText.Color.g;
-        float _b = _scriptableText.Color.b;
+        Color clr = _scriptableText.material.color;
+
+        float _r = clr.r;
+        float _g = clr.g;
+        float _b = clr.b;
         float _a = _text.color.a;
 
         _text.color = new Color(_r, _g, _b, _a);   

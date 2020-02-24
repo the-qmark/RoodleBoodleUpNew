@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameStarted?.Invoke();
+            Application.Quit();
         }
     }
 }
