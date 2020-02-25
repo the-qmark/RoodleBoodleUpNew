@@ -9,6 +9,10 @@ public class Coin : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private CircleCollider2D _circleCollider;
 
+    private void Start()
+    {
+        Destroy(gameObject, 20f);
+    }
 
     public void PickUp()
     {

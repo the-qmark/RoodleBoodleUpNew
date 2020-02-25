@@ -91,9 +91,7 @@ public class RoodleAIMovement : MonoBehaviour
         _newRotate = Quaternion.Euler(0, 0, -_zRotation[zIndex] * _dir);
 
         int xIndex = Random.Range(0, _xPosition.Length);
-        _newPos = new Vector3(_xPosition[xIndex] * _dir, 0, 0);
-
-        
+        _newPos = new Vector3(_xPosition[xIndex] * _dir, 0, 0);  
     }
 
 
@@ -127,6 +125,8 @@ public class RoodleAIMovement : MonoBehaviour
         _movementSpeed += _increaseMovementSpeed;
         _rotateSpeed += _increaseRotateSpeed;
 
+        if (isStop)
+            return;
         _currentMovementSpeed = _movementSpeed;
         _currentRotateSpeed = _rotateSpeed;
     }

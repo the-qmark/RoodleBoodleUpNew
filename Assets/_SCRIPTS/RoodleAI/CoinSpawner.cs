@@ -5,19 +5,23 @@ using UnityEngine;
 public class CoinSpawner : MonoBehaviour
 {
     [SerializeField] Coin _coinPrefab;
-
+    private IEnumerator _spawnCoinRoutine;
 
     public void StartCoinSpawn()
     {
-        StartCoroutine(SpawnCoin());
+        if (_spawnCoinRoutine == null)
+            _spawnCoinRoutine = SpawnCoin();
+
+        StartCoroutine(_spawnCoinRoutine);
         Debug.Log("StartCour");
     }
 
 
     public void StopCoinSpawn()
     {
-        //StopCoroutine(SpawnCoin());
-        StopAllCoroutines();
+        StopCoroutine(_spawnCoinRoutine);
+        //StopCoroutine()
+        //StopAllCoroutines();
         Debug.Log("StopCour");
     }
 
