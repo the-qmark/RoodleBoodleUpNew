@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoodleAutoController : MonoBehaviour
 {
-    [SerializeField] private List<AutoMoveData> _autoMoveData = new List<AutoMoveData>();
+    [SerializeField] private List<AutoMoveData> _autoMoveDataList = new List<AutoMoveData>();
 
     private int _dir;
     private float _step;
@@ -20,7 +20,7 @@ public class RoodleAutoController : MonoBehaviour
     public void AddNewData(Quaternion _rotation, Vector3 _position, int dir, float mSpeed, float rSpeed)
     {
         AutoMoveData moveData = new AutoMoveData(_rotation, _position, dir, mSpeed, rSpeed);
-        _autoMoveData.Add(moveData);
+        _autoMoveDataList.Add(moveData);
         //Debug.Log("Add new = " + moveData.Rotation + "----" + moveData.Position + "----" + moveData.Dir + "----" + moveData.MovementSpeed + "----" + moveData.RotateSpeed);
     }
 
@@ -35,13 +35,14 @@ public class RoodleAutoController : MonoBehaviour
     {
         _index = 0;
 
-        newRotate = _autoMoveData[_index].Rotation;
-        newPosition = _autoMoveData[_index].Position;
+        newRotate = _autoMoveDataList[_index].Rotation;
+        newPosition = _autoMoveDataList[_index].Position;
+        transform.rotation = newRotate;
 
-        _dir = _autoMoveData[_index].Dir;
+        _dir = _autoMoveDataList[_index].Dir;
 
-        _currentMovementSpeed = _autoMoveData[_index].MovementSpeed;
-        _currentRotateSpeed = _autoMoveData[_index].RotateSpeed;
+        _currentMovementSpeed = _autoMoveDataList[_index].MovementSpeed;
+        _currentRotateSpeed = _autoMoveDataList[_index].RotateSpeed;
 
         //Debug.Log("OnEnable speed = " + _currentMovementSpeed);
     }
@@ -56,8 +57,8 @@ public class RoodleAutoController : MonoBehaviour
         {
             if (transform.position.x >= newPosition.x)
             {
-                if (_index >= _autoMoveData.Count-1)
-                    return;
+                //if (_index >= _autoMoveDataList.Count-1)
+                //    return;
                 GetNewRotateAndPosition(out newRotate, out newPosition);
             }
         }
@@ -65,8 +66,8 @@ public class RoodleAutoController : MonoBehaviour
         {
             if (transform.position.x <= newPosition.x)
             {
-                if (_index >= _autoMoveData.Count-1)
-                    return;
+                //if (_index >= _autoMoveDataList.Count-1)
+                //    return;
                 GetNewRotateAndPosition(out newRotate, out newPosition);
             }
         }
@@ -81,15 +82,25 @@ public class RoodleAutoController : MonoBehaviour
 
     private void GetNewRotateAndPosition(out Quaternion newRotate, out Vector3 newPosition)
     {
+        // _rigibody.velocity = Vector2.zero;
+        //enabled = false;
+
+        
+
         _index++;
 
-        newRotate = _autoMoveData[_index].Rotation;
-        newPosition = _autoMoveData[_index].Position;
+        Debug.Log("COUNT = " + _autoMoveDataList.Count);
+        Debug.Log("INDEX = " + _index);
 
-        _currentMovementSpeed = _autoMoveData[_index].MovementSpeed;
-        _currentRotateSpeed = _autoMoveData[_index].RotateSpeed;
+        newRotate = _autoMoveDataList[_index].Rotation;
+        newPosition = _autoMoveDataList[_index].Position;
 
-        Debug.Log("NEW");
+        _dir = _autoMoveDataList[_index].Dir;
+
+        _currentMovementSpeed = _autoMoveDataList[_index].MovementSpeed;
+        _currentRotateSpeed = _autoMoveDataList[_index].RotateSpeed;
+
+        
     }
 
 

@@ -26,7 +26,7 @@ public class RoodleTriggerEnter : MonoBehaviour
     {
         if (collision.CompareTag("Hexagon"))
         {
-            //GameOver?.Invoke();
+            GameOver?.Invoke();
         }
 
         if (collision.CompareTag("NewStage"))
@@ -43,6 +43,7 @@ public class RoodleTriggerEnter : MonoBehaviour
         if (collision.TryGetComponent<AutoMove>(out AutoMove _autoMove))
         {
             _autoMove.PickUp();
+
             _roodleAuto.enabled = true;
             _roodleController.enabled = false;
             //_roodleAuto.AddNewData(_autoMove.Rotation, _autoMove.Position);
