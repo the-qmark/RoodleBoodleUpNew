@@ -13,6 +13,8 @@ public class RoodleTriggerEnter : MonoBehaviour
     public UnityEvent GameOver;
     public UnityEvent ReachedNewStage;
 
+    private RoodleAutoController _roodleAuto;
+
     private void Start()
     {
         
@@ -34,6 +36,13 @@ public class RoodleTriggerEnter : MonoBehaviour
         if (collision.TryGetComponent<Coin>(out Coin _coin))
         {
             _coin.PickUp();
+        }
+
+        if (collision.TryGetComponent<AutoMove>(out AutoMove _autoMove))
+        {
+            _autoMove.PickUp();
+            _roodleAuto.enabled = true;
+            _roodleAuto.AddNewData(_autoMove.Rotation, _autoMove.Position);
         }
     }
 

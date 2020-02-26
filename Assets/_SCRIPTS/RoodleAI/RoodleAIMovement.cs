@@ -18,8 +18,9 @@ public class RoodleAIMovement : MonoBehaviour
     private float[] _xPosition = { 5f, 10, 15f, 20f };
     private float[] _zRotation = { 30, 40, 50, 60, 70, 80 };
 
-    private Quaternion _newRotate;
-    private Vector3 _newPosition;
+
+    [HideInInspector] public Quaternion _newRotate;
+    [HideInInspector] public Vector3 _newPosition;
 
     private int _dir;
     private float _step;

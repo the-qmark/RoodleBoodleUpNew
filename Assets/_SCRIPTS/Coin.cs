@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+
     [SerializeField] private GameObject _idleEffect;
     [SerializeField] private GameObject _pickUpEffect;
     [SerializeField] private SpriteRenderer _spriteRenderer;

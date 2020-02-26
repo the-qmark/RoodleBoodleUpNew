@@ -9577,7 +9577,6 @@ GameObject:
   - component: {fileID: 514823564427249777}
   - component: {fileID: 514823564427249678}
   - component: {fileID: 514823564427249776}
-  - component: {fileID: 674089481478032347}
   - component: {fileID: 3334608358833158391}
   m_Layer: 0
   m_Name: Coin
@@ -9617,7 +9616,7 @@ MonoBehaviour:
   _idleEffect: {fileID: 514823563131943929}
   _pickUpEffect: {fileID: 514823563334682267}
   _spriteRenderer: {fileID: 514823564427249776}
-  _circleCollider: {fileID: 674089481478032347}
+  _circleCollider: {fileID: 3334608358833158391}
 --- !u!212 &514823564427249776
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9668,22 +9667,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &674089481478032347
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 514823564427249779}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.635
 --- !u!58 &3334608358833158391
 CircleCollider2D:
   m_ObjectHideFlags: 0
