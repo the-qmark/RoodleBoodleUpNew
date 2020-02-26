@@ -29,8 +29,8 @@ public class ScoreCounter : MonoBehaviour
 
         if ((int)_currentScore >= _newStageLimit)
         {
-            CreatedNewStage?.Invoke();
-            _newStageLimit += 10;
+            //CreatedNewStage?.Invoke();
+            //_newStageLimit += 10;
         }
             
     }

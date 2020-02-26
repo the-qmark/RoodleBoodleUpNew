@@ -13,11 +13,13 @@ public class RoodleTriggerEnter : MonoBehaviour
     public UnityEvent GameOver;
     public UnityEvent ReachedNewStage;
 
+    private RoodleController _roodleController;
     private RoodleAutoController _roodleAuto;
 
     private void Start()
     {
-        
+        _roodleController = GetComponent<RoodleController>();
+        _roodleAuto = GetComponent<RoodleAutoController>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,7 +44,8 @@ public class RoodleTriggerEnter : MonoBehaviour
         {
             _autoMove.PickUp();
             _roodleAuto.enabled = true;
-            _roodleAuto.AddNewData(_autoMove.Rotation, _autoMove.Position);
+            _roodleController.enabled = false;
+            //_roodleAuto.AddNewData(_autoMove.Rotation, _autoMove.Position);
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerUpSpawn : MonoBehaviour
 {
     [SerializeField] private AutoMove _autoMovePref;
+    [SerializeField] private RoodleAutoController _roodleAuto;
 
     private IEnumerator _spawnPowerUpRoutine;
     private RoodleAIMovement _roodleAIMovement;
@@ -19,6 +20,8 @@ public class PowerUpSpawn : MonoBehaviour
 
         _spawnPowerUpRoutine = PowerSpawn();
 
+        a = true;
+
     }
 
 
@@ -32,9 +35,13 @@ public class PowerUpSpawn : MonoBehaviour
         StopCoroutine(_spawnPowerUpRoutine);
     }
 
+    private bool a;
+
     private IEnumerator PowerSpawn()
     {
-        WaitForSeconds _delay = new WaitForSeconds(10f);
+        WaitForSeconds _delay = new WaitForSeconds(1f);
+
+        yield return _delay;
 
         float _chance;
 
@@ -42,11 +49,19 @@ public class PowerUpSpawn : MonoBehaviour
         {
             _chance = Random.Range(0, 20);
 
-            if (_chance > 17)
+            if (_chance > 0 && a)
             {
-                AutoMove _auto = Instantiate(_autoMovePref, transform.position, Quaternion.identity);
+                Instantiate(_autoMovePref, transform.position, Quaternion.identity);
+                _roodleAuto.AddNewData(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition, _roodleAIMovement._dir, 
+                    _roodleAIMovement._currentMovementSpeed, _roodleAIMovement._currentRotateSpeed);
 
-                _auto.SetDataForAutoMove(_roodleAIMovement._newRotate, _roodleAIMovement._newPosition);
+
+                Debug.Log(_roodleAIMovement._currentMovementSpeed);
+                _roodleAIMovement.isSpawnAuto = true;
+
+                a = false;
+
+                //_auto.SetDataForAutoMove(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition);
 
             }
 

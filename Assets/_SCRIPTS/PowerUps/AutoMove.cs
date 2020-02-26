@@ -9,8 +9,8 @@ public class AutoMove : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private CircleCollider2D _circleCollider;
 
-    public Quaternion Rotation;
-    public Vector3 Position;
+    //public Quaternion Rotation;
+    //public Vector3 Position;
 
     private void Start()
     {
@@ -26,9 +26,9 @@ public class AutoMove : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    public void SetDataForAutoMove(Quaternion _rotation, Vector3 _position)
-    {
-        Rotation = _rotation;
-        Position = _position;
-    }
+    //public void SetDataForAutoMove(Quaternion _rotation, Vector3 _position)
+    //{
+    //    Rotation = _rotation;
+    //    Position = _position;
+    //}
 }
