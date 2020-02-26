@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class RoodleAIMovement : MonoBehaviour
 {
@@ -26,17 +27,25 @@ public class RoodleAIMovement : MonoBehaviour
 
     private bool isStop;
 
-    private CoinSpawner _coinSpawner;
+    //private CoinSpawner _coinSpawner;
+    public event Action StartMovement;
+    public event Action StopMovement;
 
 
     private void Start()
     {
         //dir = Random.Range(1, 10);
-        _coinSpawner = GetComponent<CoinSpawner>();
-        _dir = Random.Range(1, 10) < 5 ? -1 : 1; // -1 влево
+        //_coinSpawner = GetComponent<CoinSpawner>();
+        _dir = UnityEngine.Random.Range(1, 10) < 5 ? -1 : 1; // -1 влево
         _rigibody = GetComponent<Rigidbody2D>();
         SetNewRotateAndPosition(out _newRotate, out _newPosition);
-        StartMovement();
+
+        StartMovement += OnStartMovement;
+        StopMovement += OnStopMovement;
+
+        StartMovement?.Invoke();
+
+        //OnStartMovement();
     }
 
 
@@ -44,14 +53,16 @@ public class RoodleAIMovement : MonoBehaviour
     {
         if (!isStop && transform.position.y > _roodle.position.y + 250)
         {
-            isStop = true;
-            StopMovement();
+            //isStop = true;
+            StopMovement?.Invoke();
+            //OnStopMovement();
         }
         
         if (isStop && transform.position.y < _roodle.position.y + 201)
         {
-            isStop = false;
-            StartMovement();
+            //isStop = false;
+            StartMovement?.Invoke();
+            //OnStartMovement();
         }
             
         
@@ -87,27 +98,29 @@ public class RoodleAIMovement : MonoBehaviour
     {
         _dir *= -1;
 
-        int zIndex = Random.Range(0, _zRotation.Length);
+        int zIndex = UnityEngine.Random.Range(0, _zRotation.Length);
         _newRotate = Quaternion.Euler(0, 0, -_zRotation[zIndex] * _dir);
 
-        int xIndex = Random.Range(0, _xPosition.Length);
+        int xIndex = UnityEngine.Random.Range(0, _xPosition.Length);
         _newPos = new Vector3(_xPosition[xIndex] * _dir, 0, 0);  
     }
 
 
-    private void StartMovement()
+    private void OnStartMovement()
     {
         _currentMovementSpeed = _movementSpeed;
         _currentRotateSpeed = _rotateSpeed;
-        _coinSpawner.StartCoinSpawn();
+        isStop = false;
+        //_coinSpawner.StartCoinSpawn();
     }
 
 
-    private void StopMovement()
+    private void OnStopMovement()
     {
         _currentMovementSpeed = 0;
         _currentRotateSpeed = 0;
-        _coinSpawner.StopCoinSpawn();
+        isStop = true;
+        //_coinSpawner.StopCoinSpawn();
     }
 
 
@@ -127,6 +140,7 @@ public class RoodleAIMovement : MonoBehaviour
 
         if (isStop)
             return;
+
         _currentMovementSpeed = _movementSpeed;
         _currentRotateSpeed = _rotateSpeed;
     }

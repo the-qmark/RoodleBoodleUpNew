@@ -6,6 +6,16 @@ public class CoinSpawner : MonoBehaviour
 {
     [SerializeField] Coin _coinPrefab;
     private IEnumerator _spawnCoinRoutine;
+    private RoodleAIMovement _roodleAIMovement;
+
+
+    private void Start()
+    {
+        _roodleAIMovement = GetComponent<RoodleAIMovement>();
+
+        _roodleAIMovement.StartMovement += StartCoinSpawn;
+        _roodleAIMovement.StopMovement += StopCoinSpawn;
+    }
 
     public void StartCoinSpawn()
     {
