@@ -32,6 +32,7 @@ public class RoodleAIMovement : MonoBehaviour
     //private CoinSpawner _coinSpawner;
     public event Action StartMovement;
     public event Action StopMovement;
+    public event Action SetNewTransform;
 
 
     private void Start()
@@ -97,7 +98,7 @@ public class RoodleAIMovement : MonoBehaviour
         _rigibody.velocity = transform.up * _currentMovementSpeed * Time.fixedDeltaTime;
     }
 
-    public bool isSpawnAuto;
+//    public bool isSpawnAuto;
 
     private void SetNewRotateAndPosition(out Quaternion newRotate, out Vector3 newPos)
     {
@@ -107,12 +108,14 @@ public class RoodleAIMovement : MonoBehaviour
         newRotate = Quaternion.Euler(0, 0, -_zRotation[zIndex] * _dir);
 
         int xIndex = UnityEngine.Random.Range(0, _xPosition.Length);
-        newPos = new Vector3(_xPosition[xIndex] * _dir, 0, 0);  
+        newPos = new Vector3(_xPosition[xIndex] * _dir, 0, 0);
 
-        if (isSpawnAuto)
-        {
-            _roodleAuto.AddNewData(newRotate, newPos, _dir, _currentMovementSpeed, _currentRotateSpeed);
-        }
+        SetNewTransform?.Invoke();
+
+        //if (isSpawnAuto)
+        //{
+        //    _roodleAuto.AddNewData(newRotate, newPos, _dir, _currentMovementSpeed, _currentRotateSpeed);
+        //}
     }
 
 

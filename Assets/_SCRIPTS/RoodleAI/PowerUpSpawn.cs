@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUpSpawn : MonoBehaviour
 {
     [SerializeField] private AutoMove _autoMovePref;
-    [SerializeField] private RoodleAutoController _roodleAuto;
+    [SerializeField] private RoodleAutoController _roodleAutoController;
 
     private IEnumerator _spawnPowerUpRoutine;
     private RoodleAIMovement _roodleAIMovement;
@@ -13,15 +13,17 @@ public class PowerUpSpawn : MonoBehaviour
 
     private void Start()
     {
-        _roodleAIMovement = GetComponent<RoodleAIMovement>();
+        //_roodleAIMovement = GetComponent<RoodleAIMovement>();
 
-        _roodleAIMovement.StartMovement += StartPowerUpSpawn;
-        _roodleAIMovement.StopMovement += StopPowerUpSpawn;
+        //_roodleAIMovement.StartMovement += StartPowerUpSpawn;
+        //_roodleAIMovement.StopMovement += StopPowerUpSpawn;
 
-        _spawnPowerUpRoutine = PowerSpawn();
+        //_spawnPowerUpRoutine = PowerSpawn();
 
-        a = true;
+        //a = true;
 
+
+        _roodleAIMovement.SetNewTransform += SpawnAutoMove;
     }
 
 
@@ -37,35 +39,70 @@ public class PowerUpSpawn : MonoBehaviour
 
     private bool a;
 
-    private IEnumerator PowerSpawn()
+    //private IEnumerator PowerSpawn()
+    //{
+    //    //WaitForSeconds _delay = new WaitForSeconds(1f);
+
+    //    //yield return _delay;
+
+    //    //float _chance;
+
+    //    //while (true)
+    //    //{
+    //    //    _chance = Random.Range(0, 20);
+
+    //    //    if (_chance > 0 && a)
+    //    //    {
+    //    //        Instantiate(_autoMovePref, transform.position, Quaternion.identity);
+    //    //        _roodleAuto.AddNewData(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition, _roodleAIMovement._dir, 
+    //    //            _roodleAIMovement._currentMovementSpeed, _roodleAIMovement._currentRotateSpeed);
+
+
+    //    //        Debug.Log(_roodleAIMovement._currentMovementSpeed);
+    //    //        _roodleAIMovement.isSpawnAuto = true;
+
+    //    //        a = false;
+
+    //    //        //_auto.SetDataForAutoMove(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition);
+
+    //    //    }
+
+    //    //    yield return _delay;
+    //    //}
+    //}
+
+    private bool _autoMoveIsSpawn = false;
+    private int _autoMoveCount = 4;
+    private float _currentCount = 0;
+
+    private void SpawnAutoMove()
     {
-        WaitForSeconds _delay = new WaitForSeconds(1f);
+        float _chance = Random.Range(0, 20);
+        
 
-        yield return _delay;
-
-        float _chance;
-
-        while (true)
+        if (_chance > 17 && !_autoMoveIsSpawn)
         {
-            _chance = Random.Range(0, 20);
 
-            if (_chance > 0 && a)
-            {
-                Instantiate(_autoMovePref, transform.position, Quaternion.identity);
-                _roodleAuto.AddNewData(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition, _roodleAIMovement._dir, 
-                    _roodleAIMovement._currentMovementSpeed, _roodleAIMovement._currentRotateSpeed);
+            Instantiate(_autoMovePref, transform.position, Quaternion.identity);
 
+            _roodleAutoController.AddNewData(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition, _roodleAIMovement._dir,
+                _roodleAIMovement._currentMovementSpeed, _roodleAIMovement._currentRotateSpeed);
 
-                Debug.Log(_roodleAIMovement._currentMovementSpeed);
-                _roodleAIMovement.isSpawnAuto = true;
+            _currentCount = _autoMoveCount;
 
-                a = false;
-
-                //_auto.SetDataForAutoMove(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition);
-
-            }
-
-            yield return _delay;
+            _autoMoveIsSpawn = true;
         }
+        else
+        if (_autoMoveIsSpawn)
+        {
+            _currentCount--;
+
+            _roodleAutoController.AddNewData(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition, _roodleAIMovement._dir,
+                _roodleAIMovement._currentMovementSpeed, _roodleAIMovement._currentRotateSpeed);
+
+            if (_currentCount == 0)
+                _autoMoveIsSpawn = false;
+        }
+       
     }
 }
