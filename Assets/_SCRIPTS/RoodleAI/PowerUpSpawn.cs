@@ -6,6 +6,7 @@ public class PowerUpSpawn : MonoBehaviour
 {
     [SerializeField] private AutoMove _autoMovePref;
     [SerializeField] private RoodleAutoController _roodleAutoController;
+    [SerializeField] private RoodleController _roodleController;
 
     private IEnumerator _spawnPowerUpRoutine;
     private RoodleAIMovement _roodleAIMovement;
@@ -13,7 +14,7 @@ public class PowerUpSpawn : MonoBehaviour
 
     private void Start()
     {
-        //_roodleAIMovement = GetComponent<RoodleAIMovement>();
+        _roodleAIMovement = GetComponent<RoodleAIMovement>();
 
         //_roodleAIMovement.StartMovement += StartPowerUpSpawn;
         //_roodleAIMovement.StopMovement += StopPowerUpSpawn;
@@ -80,13 +81,15 @@ public class PowerUpSpawn : MonoBehaviour
         float _chance = Random.Range(0, 20);
         
 
-        if (_chance > 17 && !_autoMoveIsSpawn)
+        if (_chance > 0 && !_autoMoveIsSpawn)
         {
 
             Instantiate(_autoMovePref, transform.position, Quaternion.identity);
 
             _roodleAutoController.AddNewData(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition, _roodleAIMovement._dir,
                 _roodleAIMovement._currentMovementSpeed, _roodleAIMovement._currentRotateSpeed);
+
+            Debug.Log(_roodleAIMovement._currentMovementSpeed + "--" + _roodleAIMovement._currentRotateSpeed);
 
             _currentCount = _autoMoveCount;
 
@@ -97,11 +100,20 @@ public class PowerUpSpawn : MonoBehaviour
         {
             _currentCount--;
 
+            if (_currentCount == 0)
+            {
+                //_roodleAutoController.enabled = false;
+                //_roodleController.enabled = true;
+                _autoMoveIsSpawn = false;
+                Debug.Log("reset");
+                return;
+            }
+            //Debug.Log("new data");
             _roodleAutoController.AddNewData(_roodleAIMovement.newRotate, _roodleAIMovement.newPosition, _roodleAIMovement._dir,
                 _roodleAIMovement._currentMovementSpeed, _roodleAIMovement._currentRotateSpeed);
 
-            if (_currentCount == 0)
-                _autoMoveIsSpawn = false;
+            
+                
         }
        
     }

@@ -48,7 +48,7 @@ public class RoodleAIMovement : MonoBehaviour
 
         StartMovement?.Invoke();
 
-        Debug.Log("sd = " + _currentMovementSpeed);
+        //Debug.Log("sd = " + _currentMovementSpeed);
 
         //OnStartMovement();
     }

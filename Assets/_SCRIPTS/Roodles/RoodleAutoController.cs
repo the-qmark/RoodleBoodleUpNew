@@ -6,14 +6,16 @@ public class RoodleAutoController : MonoBehaviour
 {
     [SerializeField] private List<AutoMoveData> _autoMoveDataList = new List<AutoMoveData>();
 
-    private int _dir;
+    [SerializeField] private int _dir;
     private float _step;
     private Rigidbody2D _rigibody;
 
-    private float _currentMovementSpeed;
-    private float _currentRotateSpeed;
-    private Quaternion newRotate;
-    private Vector3 newPosition;
+    [SerializeField] private float _currentMovementSpeed;
+    [SerializeField] private float _currentRotateSpeed;
+    [SerializeField] private Quaternion newRotate;
+    [SerializeField] private Vector3 newPosition;
+
+    [SerializeField] private RoodleController _roodleController;
 
     private int _index;
 
@@ -37,7 +39,7 @@ public class RoodleAutoController : MonoBehaviour
 
         newRotate = _autoMoveDataList[_index].Rotation;
         newPosition = _autoMoveDataList[_index].Position;
-        transform.rotation = newRotate;
+        //transform.rotation = newRotate;
 
         _dir = _autoMoveDataList[_index].Dir;
 
@@ -45,6 +47,7 @@ public class RoodleAutoController : MonoBehaviour
         _currentRotateSpeed = _autoMoveDataList[_index].RotateSpeed;
 
         //Debug.Log("OnEnable speed = " + _currentMovementSpeed);
+        _currentCount = _autoMoveCount;
     }
 
     private void Update()
@@ -72,6 +75,8 @@ public class RoodleAutoController : MonoBehaviour
             }
         }
 
+        Debug.Log("auto update");
+
     }
 
     private void FixedUpdate()
@@ -80,17 +85,43 @@ public class RoodleAutoController : MonoBehaviour
         
     }
 
+    private int _autoMoveCount = 4;
+    private float _currentCount = 0;
+
     private void GetNewRotateAndPosition(out Quaternion newRotate, out Vector3 newPosition)
     {
         // _rigibody.velocity = Vector2.zero;
         //enabled = false;
 
-        
+        _currentCount--;
+
+        if (_currentCount < 1)
+        {
+            _roodleController.enabled = true;
+            this.enabled = false;
+
+            newRotate = Quaternion.identity;
+            newPosition = Vector3.zero;
+            return;
+
+        }
+
+
+
 
         _index++;
 
-        Debug.Log("COUNT = " + _autoMoveDataList.Count);
-        Debug.Log("INDEX = " + _index);
+        //if (_index == _autoMoveDataList.Count)
+        //{
+
+        //    newRotate = Quaternion.identity;
+        //    newPosition = Vector3.zero;
+        //    return;
+
+        //}
+
+        //Debug.Log("COUNT = " + _autoMoveDataList.Count);
+        //Debug.Log("INDEX = " + _index);
 
         newRotate = _autoMoveDataList[_index].Rotation;
         newPosition = _autoMoveDataList[_index].Position;

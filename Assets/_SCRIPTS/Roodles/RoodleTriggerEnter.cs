@@ -26,7 +26,7 @@ public class RoodleTriggerEnter : MonoBehaviour
     {
         if (collision.CompareTag("Hexagon"))
         {
-            GameOver?.Invoke();
+            //GameOver?.Invoke();
         }
 
         if (collision.CompareTag("NewStage"))
