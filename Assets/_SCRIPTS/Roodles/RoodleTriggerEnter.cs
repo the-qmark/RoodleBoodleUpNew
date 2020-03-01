@@ -20,6 +20,7 @@ public class RoodleTriggerEnter : MonoBehaviour
     {
         _roodleController = GetComponent<RoodleController>();
         _roodleAuto = GetComponent<RoodleAutoController>();
+        //Time.timeScale = 0.2f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -43,7 +44,8 @@ public class RoodleTriggerEnter : MonoBehaviour
         if (collision.TryGetComponent<AutoMove>(out AutoMove _autoMove))
         {
             _autoMove.PickUp();
-
+            transform.position = _autoMove.transform.position;
+            transform.rotation = _autoMove.transform.rotation;
             _roodleAuto.enabled = true;
             _roodleController.enabled = false;
             //_roodleAuto.AddNewData(_autoMove.Rotation, _autoMove.Position);

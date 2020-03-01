@@ -12,9 +12,17 @@ public class AutoMove : MonoBehaviour
     //public Quaternion Rotation;
     //public Vector3 Position;
 
+    public static bool IsActive;
+
     private void Start()
     {
         Destroy(gameObject, 20f);
+        IsActive = true;
+    }
+
+    private void OnDestroy()
+    {
+        IsActive = false;
     }
 
     public void PickUp()
@@ -23,6 +31,7 @@ public class AutoMove : MonoBehaviour
         _pickUpEffect.SetActive(true);
         _spriteRenderer.enabled = false;
         _circleCollider.enabled = false;
+        IsActive = false;
         Destroy(gameObject, 3f);
     }
 

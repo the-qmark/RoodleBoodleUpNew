@@ -14,11 +14,9 @@ public class RoodleAIMovement : MonoBehaviour
     [SerializeField] private float _increaseRotateSpeed;
 
     [SerializeField] private Transform _roodle;
-    [SerializeField] private RoodleAutoController _roodleAuto;
 
     private float[] _xPosition = { 5f, 10, 15f, 20f };
     private float[] _zRotation = { 30, 40, 50, 60, 70, 80 };
-
 
     [HideInInspector] public Quaternion newRotate;
     [HideInInspector] public Vector3 newPosition;
@@ -29,47 +27,33 @@ public class RoodleAIMovement : MonoBehaviour
 
     private bool isStop;
 
-    //private CoinSpawner _coinSpawner;
     public event Action StartMovement;
     public event Action StopMovement;
-    public event Action SetNewTransform;
+    public event Action<Quaternion, Vector3, int, float, float> SetNewTransform;
 
-
-    private void Start()
+    private void Awake()
     {
-        //dir = Random.Range(1, 10);
-        //_coinSpawner = GetComponent<CoinSpawner>();
-        _dir = UnityEngine.Random.Range(1, 10) < 5 ? -1 : 1; // -1 влево
-        _rigibody = GetComponent<Rigidbody2D>();
-        SetNewRotateAndPosition(out newRotate, out newPosition);
-
         StartMovement += OnStartMovement;
         StopMovement += OnStopMovement;
 
         StartMovement?.Invoke();
+    }
 
-        //Debug.Log("sd = " + _currentMovementSpeed);
-
-        //OnStartMovement();
+    private void Start()
+    {
+        _dir = UnityEngine.Random.Range(1, 10) < 5 ? -1 : 1; // -1 влево
+        _rigibody = GetComponent<Rigidbody2D>();
+        SetNewRotateAndPosition(out newRotate, out newPosition);
     }
 
 
     private void Update()
     {
         if (!isStop && transform.position.y > _roodle.position.y + 250)
-        {
-            //isStop = true;
             StopMovement?.Invoke();
-            //OnStopMovement();
-        }
         
         if (isStop && transform.position.y < _roodle.position.y + 201)
-        {
-            //isStop = false;
             StartMovement?.Invoke();
-            //OnStartMovement();
-        }
-            
         
         _step = Time.deltaTime * _currentRotateSpeed;
         
@@ -78,16 +62,12 @@ public class RoodleAIMovement : MonoBehaviour
         if (_dir > 0) // вправо
         {
             if (transform.position.x >= newPosition.x)
-            {
                 SetNewRotateAndPosition(out newRotate, out newPosition);
-            }
         }
         else
         {
             if (transform.position.x <= newPosition.x)
-            {
                 SetNewRotateAndPosition(out newRotate, out newPosition);
-            }
         }
 
     }
@@ -98,7 +78,6 @@ public class RoodleAIMovement : MonoBehaviour
         _rigibody.velocity = transform.up * _currentMovementSpeed * Time.fixedDeltaTime;
     }
 
-//    public bool isSpawnAuto;
 
     private void SetNewRotateAndPosition(out Quaternion newRotate, out Vector3 newPos)
     {
@@ -110,12 +89,9 @@ public class RoodleAIMovement : MonoBehaviour
         int xIndex = UnityEngine.Random.Range(0, _xPosition.Length);
         newPos = new Vector3(_xPosition[xIndex] * _dir, 0, 0);
 
-        SetNewTransform?.Invoke();
+        Debug.Log("DIR = " + _dir);
 
-        //if (isSpawnAuto)
-        //{
-        //    _roodleAuto.AddNewData(newRotate, newPos, _dir, _currentMovementSpeed, _currentRotateSpeed);
-        //}
+        SetNewTransform?.Invoke(newRotate, newPos, _dir, _movementSpeed, _rotateSpeed);
     }
 
 
@@ -124,7 +100,6 @@ public class RoodleAIMovement : MonoBehaviour
         _currentMovementSpeed = _movementSpeed;
         _currentRotateSpeed = _rotateSpeed;
         isStop = false;
-        //_coinSpawner.StartCoinSpawn();
     }
 
 
@@ -133,7 +108,7 @@ public class RoodleAIMovement : MonoBehaviour
         _currentMovementSpeed = 0;
         _currentRotateSpeed = 0;
         isStop = true;
-        //_coinSpawner.StopCoinSpawn();
+
     }
 
 

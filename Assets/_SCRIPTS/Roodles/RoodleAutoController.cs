@@ -16,13 +16,19 @@ public class RoodleAutoController : MonoBehaviour
     [SerializeField] private Vector3 newPosition;
 
     [SerializeField] private RoodleController _roodleController;
+    [SerializeField] private ParticleSystem _autoMoveEffect;
 
     private int _index;
+    public static bool IsActive;
 
     public void AddNewData(Quaternion _rotation, Vector3 _position, int dir, float mSpeed, float rSpeed)
     {
+        //if (_isActive)
+        //    return;
+
         AutoMoveData moveData = new AutoMoveData(_rotation, _position, dir, mSpeed, rSpeed);
         _autoMoveDataList.Add(moveData);
+        //Debug.Log(_autoMoveDataList.Count);
         //Debug.Log("Add new = " + moveData.Rotation + "----" + moveData.Position + "----" + moveData.Dir + "----" + moveData.MovementSpeed + "----" + moveData.RotateSpeed);
     }
 
@@ -35,6 +41,8 @@ public class RoodleAutoController : MonoBehaviour
 
     private void OnEnable()
     {
+        IsActive = true;
+
         _index = 0;
 
         newRotate = _autoMoveDataList[_index].Rotation;
@@ -46,8 +54,19 @@ public class RoodleAutoController : MonoBehaviour
         _currentMovementSpeed = _autoMoveDataList[_index].MovementSpeed;
         _currentRotateSpeed = _autoMoveDataList[_index].RotateSpeed;
 
-        //Debug.Log("OnEnable speed = " + _currentMovementSpeed);
-        _currentCount = _autoMoveCount;
+        Debug.Log("OnEnable rotate = " + newRotate);
+        Debug.Log("OnEnable position = " + newPosition);
+        Debug.Log("OnEnable dir = " + _dir);
+
+        //_currentCount = _autoMoveCount;
+        _autoMoveEffect.gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        _autoMoveEffect.gameObject.SetActive(false);
+        _autoMoveDataList.Clear();
+        IsActive = false;
     }
 
     private void Update()
@@ -55,6 +74,14 @@ public class RoodleAutoController : MonoBehaviour
         _step = Time.deltaTime * _currentRotateSpeed;
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotate, _step);
+
+        if (_index == _autoMoveDataList.Count - 1)
+        {
+            if (transform.rotation == newRotate)
+                GetNewRotateAndPosition(out newRotate, out newPosition);
+
+            return;
+        }
 
         if (_dir > 0) // вправо
         {
@@ -75,7 +102,7 @@ public class RoodleAutoController : MonoBehaviour
             }
         }
 
-        Debug.Log("auto update");
+        //Debug.Log("auto update");
 
     }
 
@@ -85,31 +112,53 @@ public class RoodleAutoController : MonoBehaviour
         
     }
 
-    private int _autoMoveCount = 4;
-    private float _currentCount = 0;
+    //private int _autoMoveCount = 4;
+    //private float _currentCount = 0;
 
     private void GetNewRotateAndPosition(out Quaternion newRotate, out Vector3 newPosition)
     {
         // _rigibody.velocity = Vector2.zero;
         //enabled = false;
 
-        _currentCount--;
+        //_currentCount--;
 
-        if (_currentCount < 1)
+        newRotate = Quaternion.identity;
+        newPosition = Vector3.zero;
+
+        if (_index == _autoMoveDataList.Count-1)
         {
             _roodleController.enabled = true;
             this.enabled = false;
 
-            newRotate = Quaternion.identity;
-            newPosition = Vector3.zero;
+            
             return;
 
         }
 
-
-
-
         _index++;
+
+        newRotate = _autoMoveDataList[_index].Rotation;
+        newPosition = _autoMoveDataList[_index].Position;
+
+        _dir = _autoMoveDataList[_index].Dir;
+
+        //try
+        //{
+            
+        //}
+        //catch (System.IndexOutOfRangeException)
+        //{
+
+        //    Debug.LogError(_index);
+        //}
+        
+
+        
+
+        //_currentMovementSpeed = _autoMoveDataList[_index].MovementSpeed;
+        //_currentRotateSpeed = _autoMoveDataList[_index].RotateSpeed;
+
+
 
         //if (_index == _autoMoveDataList.Count)
         //{
@@ -123,15 +172,9 @@ public class RoodleAutoController : MonoBehaviour
         //Debug.Log("COUNT = " + _autoMoveDataList.Count);
         //Debug.Log("INDEX = " + _index);
 
-        newRotate = _autoMoveDataList[_index].Rotation;
-        newPosition = _autoMoveDataList[_index].Position;
 
-        _dir = _autoMoveDataList[_index].Dir;
 
-        _currentMovementSpeed = _autoMoveDataList[_index].MovementSpeed;
-        _currentRotateSpeed = _autoMoveDataList[_index].RotateSpeed;
 
-        
     }
 
 
