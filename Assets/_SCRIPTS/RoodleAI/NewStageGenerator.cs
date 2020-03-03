@@ -18,5 +18,4 @@ public class NewStageGenerator : MonoBehaviour
     {
         Destroy(Instantiate(_newStageTemplate, transform.position, transform.rotation), 20f);
     }
-
 }

@@ -109,7 +109,6 @@ public class RoodleAutoController : MonoBehaviour
     private void FixedUpdate()
     {
         _rigibody.velocity = transform.up * _currentMovementSpeed * Time.fixedDeltaTime;
-        
     }
 
     //private int _autoMoveCount = 4;

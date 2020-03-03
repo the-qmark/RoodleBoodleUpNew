@@ -6,21 +6,24 @@ using UnityEngine.Events;
 public class RoodleController : MonoBehaviour
 {
     [SerializeField] private float _speed; // скорость полета
-    [SerializeField] private float _increaseSpeed; // на сколько увелисть скорость при достижении нового этапа
-
+    [SerializeField] private float _increaseSpeed; // на сколько увеличить скорость при достижении нового этапа
     [SerializeField] private float _sensitivity; // чувствительность поворота
-
     [SerializeField] private Camera cam;
-    private Rigidbody2D _rigibody;
 
+
+    private float _speedMultiplier;
+    private Rigidbody2D _rigibody;
     private Vector3 _currentMousePos;
     private Vector3 _nextMousePos;
     private float _deltaRot;
+
+    //public float SpeedMultiplier { set => _speedMultiplier = value; }
 
 
     private void Start()
     {
         _rigibody = GetComponent<Rigidbody2D>();
+        _speedMultiplier = 1;
         //cam = Camera.main;
     }
 
@@ -28,7 +31,7 @@ public class RoodleController : MonoBehaviour
     private void Update()
     {
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         if(Input.GetMouseButtonDown(0))
         {
             _currentMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -41,12 +44,12 @@ public class RoodleController : MonoBehaviour
             _currentMousePos = _nextMousePos;
             transform.Rotate(Vector3.forward, _deltaRot * _sensitivity * Time.deltaTime);
         }
-#endif
+//#endif
     }
 
     private void FixedUpdate()
     {
-        _rigibody.velocity = transform.up * _speed * Time.fixedDeltaTime;
+        _rigibody.velocity = transform.up * _speed * _speedMultiplier * Time.fixedDeltaTime;
     }
 
 
@@ -58,6 +61,7 @@ public class RoodleController : MonoBehaviour
 
     public void OnReachedNewStage()
     {
-        _speed += _increaseSpeed;
+        //_speed += _increaseSpeed;
+        _speedMultiplier += 0.1f;
     }
 }

@@ -8,6 +8,8 @@ public class RoodleAIMovement : MonoBehaviour
     [SerializeField] private float _movementSpeed;
     public float _currentMovementSpeed;
     [SerializeField] private float _increaseMovementSpeed;
+    //private float _speedMultiplier;
+
 
     [SerializeField] private float _rotateSpeed;
     public float _currentRotateSpeed;
@@ -43,7 +45,9 @@ public class RoodleAIMovement : MonoBehaviour
     {
         _dir = UnityEngine.Random.Range(1, 10) < 5 ? -1 : 1; // -1 влево
         _rigibody = GetComponent<Rigidbody2D>();
+        //_speedMultiplier = 1.2f;
         SetNewRotateAndPosition(out newRotate, out newPosition);
+
     }
 
 
@@ -125,6 +129,9 @@ public class RoodleAIMovement : MonoBehaviour
     {
         _movementSpeed += _increaseMovementSpeed;
         _rotateSpeed += _increaseRotateSpeed;
+
+        //_speedMultiplier += 0.1f;
+
 
         if (isStop)
             return;
