@@ -38,7 +38,7 @@ public class RoodleAIMovement : MonoBehaviour
         StartMovement += OnStartMovement;
         StopMovement += OnStopMovement;
 
-        StartMovement?.Invoke();
+        
     }
 
     private void Start()
@@ -47,7 +47,7 @@ public class RoodleAIMovement : MonoBehaviour
         _rigibody = GetComponent<Rigidbody2D>();
         //_speedMultiplier = 1.2f;
         SetNewRotateAndPosition(out newRotate, out newPosition);
-
+        StartMovement?.Invoke();
     }
 
 

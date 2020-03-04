@@ -24,6 +24,7 @@ public class CoinSpawner : MonoBehaviour
         //if (_spawnCoinRoutine == null)
         //    _spawnCoinRoutine = SpawnCoin();
 
+        Debug.Log("|ssd");
         StartCoroutine(_spawnCoinRoutine);
         //Debug.Log("StartCour");
     }

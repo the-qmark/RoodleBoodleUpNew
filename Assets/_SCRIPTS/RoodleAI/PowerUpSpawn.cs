@@ -58,7 +58,7 @@ public class PowerUpSpawn : MonoBehaviour
         float _chance = Random.Range(0, 20);
         
 
-        if (_chance > 0 && !_autoMoveIsSpawn)
+        if (_chance > 17 && !_autoMoveIsSpawn)
         {
             Instantiate(_autoMovePref, transform.position, transform.rotation);
 
