@@ -31,13 +31,6 @@ public class ScoreCounter : MonoBehaviour
         {
             CreatedNewStage?.Invoke();
             _newStageLimit += 100;
-        }
-            
+        } 
     }
-
-
-    //private void NexStage()
-    //{
-
-    //}
 }

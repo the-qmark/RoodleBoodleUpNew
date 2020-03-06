@@ -9,10 +9,8 @@ public class AutoMove : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private CircleCollider2D _circleCollider;
 
-    //public Quaternion Rotation;
-    //public Vector3 Position;
-
     public static bool IsActive;
+
 
     private void Start()
     {
@@ -20,10 +18,12 @@ public class AutoMove : MonoBehaviour
         IsActive = true;
     }
 
+
     private void OnDestroy()
     {
         IsActive = false;
     }
+
 
     public void PickUp()
     {
@@ -34,10 +34,4 @@ public class AutoMove : MonoBehaviour
         IsActive = false;
         Destroy(gameObject, 3f);
     }
-
-    //public void SetDataForAutoMove(Quaternion _rotation, Vector3 _position)
-    //{
-    //    Rotation = _rotation;
-    //    Position = _position;
-    //}
 }

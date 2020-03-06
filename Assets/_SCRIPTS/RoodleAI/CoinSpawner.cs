@@ -5,8 +5,11 @@ using UnityEngine;
 public class CoinSpawner : MonoBehaviour
 {
     [SerializeField] private Coin _coinPrefab;
+
     private IEnumerator _spawnCoinRoutine;
     private RoodleAIMovement _roodleAIMovement;
+    private WaitForSeconds _delay = new WaitForSeconds(2f);
+    private float _chanceForCoin;
 
 
     private void Start()
@@ -19,43 +22,29 @@ public class CoinSpawner : MonoBehaviour
         _spawnCoinRoutine = SpawnCoin();
     }
 
+
     public void StartCoinSpawn()
     {
-        //if (_spawnCoinRoutine == null)
-        //    _spawnCoinRoutine = SpawnCoin();
-
-        Debug.Log("|ssd");
         StartCoroutine(_spawnCoinRoutine);
-        //Debug.Log("StartCour");
+        Debug.Log("coin");
     }
 
 
     public void StopCoinSpawn()
     {
         StopCoroutine(_spawnCoinRoutine);
-        //StopCoroutine()
-        //StopAllCoroutines();
-        //Debug.Log("StopCour");
     }
 
 
     private IEnumerator SpawnCoin()
     {
-        WaitForSeconds _delay = new WaitForSeconds(2f);
-
-        float _chance;
-
-        //Debug.Log("Cour + " + gameObject.name);
-
         while (true)
         {
-            _chance = Random.Range(0, 10);
+            _chanceForCoin = Random.Range(0, 10);
 
-            if (_chance >= 5)
+            if (_chanceForCoin >= 0)
                 Instantiate(_coinPrefab, transform.position, Quaternion.identity);
 
-            //Debug.Log("COIN + " + Time.time);
-            
             yield return _delay;
         }
     }

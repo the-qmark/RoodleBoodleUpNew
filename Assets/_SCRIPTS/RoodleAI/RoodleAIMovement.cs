@@ -6,46 +6,45 @@ using System;
 public class RoodleAIMovement : MonoBehaviour
 {
     [SerializeField] private float _movementSpeed;
-    public float _currentMovementSpeed;
     [SerializeField] private float _increaseMovementSpeed;
-    //private float _speedMultiplier;
-
-
+    [Space]
     [SerializeField] private float _rotateSpeed;
-    public float _currentRotateSpeed;
     [SerializeField] private float _increaseRotateSpeed;
-
+    [Space]
     [SerializeField] private Transform _roodle;
+
+    private float _currentMovementSpeed;
+    private float _currentRotateSpeed;
 
     private float[] _xPosition = { 5f, 10, 15f, 20f };
     private float[] _zRotation = { 30, 40, 50, 60, 70, 80 };
 
-    [HideInInspector] public Quaternion newRotate;
-    [HideInInspector] public Vector3 newPosition;
+    private Quaternion newRotate;
+    private Vector3 newPosition;
 
-    public int _dir;
+    private DIRECTION _dir;
     private float _step;
     private Rigidbody2D _rigibody;
-
     private bool isStop;
 
     public event Action StartMovement;
     public event Action StopMovement;
-    public event Action<Quaternion, Vector3, int, float, float> SetNewTransform;
+    public event Action<Quaternion, Vector3, DIRECTION, float, float> SetNewTransform;
+
 
     private void Awake()
     {
         StartMovement += OnStartMovement;
         StopMovement += OnStopMovement;
-
-        
+        _currentMovementSpeed = _movementSpeed;
+        _currentRotateSpeed = _rotateSpeed;
     }
+
 
     private void Start()
     {
-        _dir = UnityEngine.Random.Range(1, 10) < 5 ? -1 : 1; // -1 влево
+        _dir = UnityEngine.Random.Range(1, 10) < 5 ? DIRECTION.LEFT : DIRECTION.RIGHT;
         _rigibody = GetComponent<Rigidbody2D>();
-        //_speedMultiplier = 1.2f;
         SetNewRotateAndPosition(out newRotate, out newPosition);
         StartMovement?.Invoke();
     }
@@ -63,7 +62,7 @@ public class RoodleAIMovement : MonoBehaviour
         
         transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotate, _step);
 
-        if (_dir > 0) // вправо
+        if (_dir == DIRECTION.RIGHT) // вправо
         {
             if (transform.position.x >= newPosition.x)
                 SetNewRotateAndPosition(out newRotate, out newPosition);
@@ -72,8 +71,8 @@ public class RoodleAIMovement : MonoBehaviour
         {
             if (transform.position.x <= newPosition.x)
                 SetNewRotateAndPosition(out newRotate, out newPosition);
+            
         }
-
     }
 
 
@@ -82,18 +81,19 @@ public class RoodleAIMovement : MonoBehaviour
         _rigibody.velocity = transform.up * _currentMovementSpeed * Time.fixedDeltaTime;
     }
 
-
+    /// <summary>
+    /// Установка нового угла поворота и новой позиции
+    /// </summary>
+    /// /// <param name="newRotate">Угол поворота</param>
     private void SetNewRotateAndPosition(out Quaternion newRotate, out Vector3 newPos)
     {
-        _dir *= -1;
+        _dir = _dir == DIRECTION.RIGHT ? DIRECTION.LEFT : DIRECTION.RIGHT;
 
         int zIndex = UnityEngine.Random.Range(0, _zRotation.Length);
-        newRotate = Quaternion.Euler(0, 0, -_zRotation[zIndex] * _dir);
+        newRotate = Quaternion.Euler(0, 0, -_zRotation[zIndex] * (int)_dir);
 
         int xIndex = UnityEngine.Random.Range(0, _xPosition.Length);
-        newPos = new Vector3(_xPosition[xIndex] * _dir, 0, 0);
-
-        Debug.Log("DIR = " + _dir);
+        newPos = new Vector3(_xPosition[xIndex] * (int)_dir, 0, 0);
 
         SetNewTransform?.Invoke(newRotate, newPos, _dir, _movementSpeed, _rotateSpeed);
     }
@@ -129,9 +129,6 @@ public class RoodleAIMovement : MonoBehaviour
     {
         _movementSpeed += _increaseMovementSpeed;
         _rotateSpeed += _increaseRotateSpeed;
-
-        //_speedMultiplier += 0.1f;
-
 
         if (isStop)
             return;

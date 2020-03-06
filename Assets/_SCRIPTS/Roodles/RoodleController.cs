@@ -10,23 +10,22 @@ public class RoodleController : MonoBehaviour
     [SerializeField] private float _sensitivity; // чувствительность поворота
     [SerializeField] private Camera cam;
 
-
-    private float _speedMultiplier;
     private Rigidbody2D _rigibody;
     private Vector3 _currentMousePos;
     private Vector3 _nextMousePos;
     private float _deltaRot;
 
-    //public float SpeedMultiplier { set => _speedMultiplier = value; }
-
 
     private void Start()
     {
         _rigibody = GetComponent<Rigidbody2D>();
-        _speedMultiplier = 1;
-        //cam = Camera.main;
     }
 
+
+    private void OnEnable()
+    {
+        _currentMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+    }
 
     private void Update()
     {
@@ -43,25 +42,20 @@ public class RoodleController : MonoBehaviour
             _deltaRot = _currentMousePos.x - _nextMousePos.x;
             _currentMousePos = _nextMousePos;
             transform.Rotate(Vector3.forward, _deltaRot * _sensitivity * Time.deltaTime);
+            _deltaRot = 0;
         }
 //#endif
     }
+    
 
     private void FixedUpdate()
     {
-        _rigibody.velocity = transform.up * _speed * _speedMultiplier * Time.fixedDeltaTime;
+        _rigibody.velocity = transform.up * _speed * Time.fixedDeltaTime;
     }
 
 
-    //public void OnGameStarted()
-    //{
-    //    _currentSpeed = Speed;
-    //    _currentSensitivity = Sensitivity;
-    //}
-
     public void OnReachedNewStage()
     {
-        //_speed += _increaseSpeed;
-        _speedMultiplier += 0.1f;
+        _speed += _increaseSpeed;
     }
 }

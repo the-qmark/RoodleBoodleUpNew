@@ -8,18 +8,16 @@ public class PowerUpSpawn : MonoBehaviour
     [SerializeField] private RoodleAutoController _roodleAutoController;
     [SerializeField] private RoodleController _roodleController;
 
-    //private IEnumerator _spawnPowerUpRoutine;
     private RoodleAIMovement _roodleAIMovement;
-
 
     private bool _autoMoveIsSpawn = false;
     private int _autoMoveCount = 3;
     private float _currentCount = 0;
+    private float _chanceForAutoMove;
 
     private void Start()
     {
         _roodleAIMovement = GetComponent<RoodleAIMovement>();
-
         _roodleAIMovement.SetNewTransform += SpawnAutoMove;
     }
 
@@ -33,45 +31,28 @@ public class PowerUpSpawn : MonoBehaviour
     }
 
 
-    private void SpawnAutoMove(Quaternion _rotate, Vector3 _position, int _direction, float _moveSpeed, float _rotateSpeed)
+    private void SpawnAutoMove(Quaternion _rotate, Vector3 _position, DIRECTION _direction, float _moveSpeed, float _rotateSpeed)
     {
         if (_autoMoveIsSpawn)
         {
             _roodleAutoController.AddNewData(_rotate, _position, _direction, _moveSpeed, _rotateSpeed);
-
             _currentCount--;
 
             if (_currentCount <= 0)
-            {
                 _autoMoveIsSpawn = false;
-                //return;
-            }
         }
 
         if (AutoMove.IsActive || RoodleAutoController.IsActive)
-        {
-            //Debug.Log("Cant Spawn");
             return;
-        }
-            
-        
-        float _chance = Random.Range(0, 20);
-        
 
-        if (_chance > 17 && !_autoMoveIsSpawn)
+        _chanceForAutoMove = Random.Range(0, 20);
+
+        if (_chanceForAutoMove > 17 && !_autoMoveIsSpawn)
         {
             Instantiate(_autoMovePref, transform.position, transform.rotation);
-
             _roodleAutoController.AddNewData(_rotate, _position, _direction, _moveSpeed, _rotateSpeed);
-
             _currentCount = _autoMoveCount;
-
             _autoMoveIsSpawn = true;
-
-
         }
-        
-        
-       
     }
 }
