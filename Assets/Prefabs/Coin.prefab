@@ -5729,7 +5729,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 100
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6131,7 +6131,7 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 32768
+        atime0: 19661
         atime1: 65535
         atime2: 0
         atime3: 0
