@@ -33,4 +33,9 @@ public class ScoreCounter : MonoBehaviour
             _newStageLimit += 100;
         } 
     }
+
+    public void OnGameOver()
+    {
+        DataStorage.UpdateMaxScore((int)_currentScore);
+    }
 }
