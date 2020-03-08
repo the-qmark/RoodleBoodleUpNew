@@ -9,6 +9,7 @@ using System;
 public class RoodleTriggerEnter : MonoBehaviour
 {
     public ParticleSystem GameOverEffect;
+    public GameObject mainRoodle;
 
     public UnityEvent GameOver;
     public UnityEvent ReachedNewStage;
@@ -33,7 +34,7 @@ public class RoodleTriggerEnter : MonoBehaviour
         if (collision.CompareTag("NewStage"))
         {
             ReachedNewStage?.Invoke();
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject, 5);
         }
 
         if (collision.TryGetComponent<Coin>(out Coin _coin))
@@ -54,6 +55,18 @@ public class RoodleTriggerEnter : MonoBehaviour
 
     public void OnGameOver()
     {
+        GameOverEffect.Play();
+        mainRoodle.SetActive(false);
+        _roodleController.enabled = false;
+        _roodleAuto.enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        StartCoroutine("ReloadScene");
+    }
+
+    IEnumerator ReloadScene()
+    {
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
