@@ -7,14 +7,15 @@ public class RoodleController : MonoBehaviour
 {
     [SerializeField] private float _speed; // скорость полета
     [SerializeField] private float _increaseSpeed; // на сколько увеличить скорость при достижении нового этапа
-    [SerializeField] private float _sensitivity; // чувствительность поворота
-    [SerializeField] private Camera cam;
+    [Space][SerializeField] private float _sensitivity; // чувствительность поворота
+    [Space][SerializeField] private Camera cam;
 
     private Rigidbody2D _rigibody;
     private Vector3 _currentMousePos;
     private Vector3 _nextMousePos;
     private float _deltaRot;
 
+    public RoodleData ActiveRoodle;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class RoodleController : MonoBehaviour
     private void OnEnable()
     {
         _currentMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        ActiveRoodle.RoodleFlyEffect.SetActive(true);
     }
 
     private void Update()

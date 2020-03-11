@@ -21,7 +21,6 @@ public class RoodleTriggerEnter : MonoBehaviour
     {
         _roodleController = GetComponent<RoodleController>();
         _roodleAuto = GetComponent<RoodleAutoController>();
-        //Time.timeScale = 0.2f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -55,11 +54,20 @@ public class RoodleTriggerEnter : MonoBehaviour
 
     public void OnGameOver()
     {
-        GameOverEffect.Play();
-        mainRoodle.SetActive(false);
+        //GameOverEffect.Play();
+        //mainRoodle.SetActive(false);
+        RoodleData activeRoodle = _roodleController.ActiveRoodle;
+
+        activeRoodle.RoodleSprite.enabled = false;
+        activeRoodle.RoodleFlyEffect.SetActive(false);
+        activeRoodle.RoodleGameOverEffect.Play();
+
         _roodleController.enabled = false;
         _roodleAuto.enabled = false;
+
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        //Coroutine a = ReloadScene;
 
         StartCoroutine("ReloadScene");
     }
@@ -69,9 +77,4 @@ public class RoodleTriggerEnter : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    //public void OnReachedNewStage()
-    //{
-
-    //}
 }
