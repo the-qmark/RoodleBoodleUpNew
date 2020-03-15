@@ -28,12 +28,13 @@ public class RoodleTriggerEnter : MonoBehaviour
         if (collision.CompareTag("Hexagon"))
         {
             GameOver?.Invoke();
+            //Debug.Log(transform.rotation.eulerAngles);
         }
 
         if (collision.CompareTag("NewStage"))
         {
             ReachedNewStage?.Invoke();
-            Destroy(collision.gameObject, 5);
+            Destroy(collision.gameObject);
         }
 
         if (collision.TryGetComponent<Coin>(out Coin _coin))
@@ -43,6 +44,7 @@ public class RoodleTriggerEnter : MonoBehaviour
 
         if (collision.TryGetComponent<AutoMove>(out AutoMove _autoMove))
         {
+            Debug.ClearDeveloperConsole();
             _autoMove.PickUp();
             transform.position = _autoMove.transform.position;
             transform.rotation = _autoMove.transform.rotation;

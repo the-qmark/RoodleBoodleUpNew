@@ -9,8 +9,11 @@ public class ScoreCounter : MonoBehaviour
     [SerializeField] private Transform _camera;
     [SerializeField] private TMP_Text _currretnScoreText;
 
-    public UnityEvent CreatedNewStage;
+    public UnityEvent OnNewStageLimit;
+    public UnityEvent OnSpawnLimit;
+
     private int _newStageLimit;
+    private int _spawmLimit;
 
     private float _currentScore;
 
@@ -19,7 +22,8 @@ public class ScoreCounter : MonoBehaviour
     {
         _currentScore = 0;
         _currretnScoreText.text = _currentScore.ToString("000000");
-        _newStageLimit = 100;
+        _newStageLimit = 5;
+        _spawmLimit = 50;
     }
 
     void Update()
@@ -29,9 +33,15 @@ public class ScoreCounter : MonoBehaviour
 
         if ((int)_currentScore >= _newStageLimit)
         {
-            CreatedNewStage?.Invoke();
-            _newStageLimit += 100;
-        } 
+            //OnNewStageLimit?.Invoke();
+            _newStageLimit += 5;
+        }
+
+        if ((int)_currentScore >= _spawmLimit)
+        {
+            OnSpawnLimit?.Invoke();
+            _spawmLimit += 50;
+        }
     }
 
     public void OnGameOver()

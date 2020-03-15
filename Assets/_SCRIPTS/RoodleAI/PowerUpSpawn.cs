@@ -47,7 +47,7 @@ public class PowerUpSpawn : MonoBehaviour
 
         _chanceForAutoMove = Random.Range(0, 20);
 
-        if (_chanceForAutoMove > 17 && !_autoMoveIsSpawn)
+        if (_chanceForAutoMove > 0 && !_autoMoveIsSpawn)
         {
             Instantiate(_autoMovePref, transform.position, transform.rotation);
             _roodleAutoController.AddNewData(_rotate, _position, _direction, _moveSpeed, _rotateSpeed);

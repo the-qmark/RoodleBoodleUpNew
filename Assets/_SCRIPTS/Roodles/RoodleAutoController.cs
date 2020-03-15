@@ -9,10 +9,10 @@ public class RoodleAutoController : MonoBehaviour
 
     private List<AutoMoveData> _autoMoveDataList = new List<AutoMoveData>();
     private DIRECTION _dir;
-    private float _currentMovementSpeed;
-    private float _currentRotateSpeed;
-    private Quaternion newRotate;
-    private Vector3 newPosition;
+    [SerializeField] private float _currentMovementSpeed;
+    [SerializeField] private float _currentRotateSpeed;
+    [SerializeField] private Quaternion newRotate;
+    [SerializeField] private Vector3 newPosition;
 
     private float _step;
     private Rigidbody2D _rigibody;
@@ -64,6 +64,7 @@ public class RoodleAutoController : MonoBehaviour
     {
         _step = Time.deltaTime * _currentRotateSpeed;
 
+
         transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotate, _step);
 
         if (_index == _autoMoveDataList.Count - 1)
@@ -102,7 +103,7 @@ public class RoodleAutoController : MonoBehaviour
         newRotate = Quaternion.identity;
         newPosition = Vector3.zero;
 
-        if (_index == _autoMoveDataList.Count-1)
+        if (_index == _autoMoveDataList.Count - 1)
         {
             _roodleController.enabled = true;
             this.enabled = false;
@@ -117,4 +118,10 @@ public class RoodleAutoController : MonoBehaviour
 
         _dir = _autoMoveDataList[_index].Dir;
     }
+
+    public void GameOver()
+    {
+        Debug.Log($"Rotation : {transform.rotation.eulerAngles} | newRotate Rotation: {newRotate.eulerAngles}");
+    }
+
 }

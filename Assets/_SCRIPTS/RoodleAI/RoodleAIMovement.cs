@@ -16,8 +16,8 @@ public class RoodleAIMovement : MonoBehaviour
     private float _currentMovementSpeed;
     private float _currentRotateSpeed;
 
-    private float[] _xPosition = { 5f, 10, 15f, 20f };
-    private float[] _zRotation = { 30, 40, 50, 60, 70, 80 };
+    private float[] _xPosition = { 15f};
+    private float[] _zRotation = { 70, 80 };
 
     private Quaternion newRotate;
     private Vector3 newPosition;
@@ -78,7 +78,7 @@ public class RoodleAIMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigibody.velocity = transform.up * _currentMovementSpeed * Time.fixedDeltaTime;
+        _rigibody.velocity = transform.up * _currentMovementSpeed * Time.deltaTime;
     }
 
     /// <summary>
