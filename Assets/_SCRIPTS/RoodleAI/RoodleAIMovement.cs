@@ -29,7 +29,7 @@ public class RoodleAIMovement : MonoBehaviour
 
     public event Action StartMovement;
     public event Action StopMovement;
-    public event Action<Quaternion, Vector3, DIRECTION, float, float> SetNewTransform;
+    public event Action<Quaternion, Vector3> SetNewTransform;
 
 
     private void Awake()
@@ -93,9 +93,9 @@ public class RoodleAIMovement : MonoBehaviour
         newRotate = Quaternion.Euler(0, 0, -_zRotation[zIndex] * (int)_dir);
 
         int xIndex = UnityEngine.Random.Range(0, _xPosition.Length);
-        newPos = new Vector3(_xPosition[xIndex] * (int)_dir, 0, 0);
+        newPos = new Vector3(_xPosition[xIndex] * (int)_dir, transform.position.y, transform.position.z);
 
-        SetNewTransform?.Invoke(newRotate, newPos, _dir, _movementSpeed, _rotateSpeed);
+        SetNewTransform?.Invoke(transform.rotation, transform.position);
     }
 
 

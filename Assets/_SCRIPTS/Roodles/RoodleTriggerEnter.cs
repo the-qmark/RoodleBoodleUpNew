@@ -16,18 +16,20 @@ public class RoodleTriggerEnter : MonoBehaviour
 
     private RoodleController _roodleController;
     private RoodleAutoController _roodleAuto;
+    private RoodleAutoMove _roodleAutoMove;
 
     private void Start()
     {
         _roodleController = GetComponent<RoodleController>();
         _roodleAuto = GetComponent<RoodleAutoController>();
+        _roodleAutoMove = GetComponent<RoodleAutoMove>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Hexagon"))
         {
-            GameOver?.Invoke();
+            //GameOver?.Invoke();
             //Debug.Log(transform.rotation.eulerAngles);
         }
 
@@ -48,8 +50,10 @@ public class RoodleTriggerEnter : MonoBehaviour
             _autoMove.PickUp();
             transform.position = _autoMove.transform.position;
             transform.rotation = _autoMove.transform.rotation;
-            _roodleAuto.enabled = true;
+            //_roodleAuto.enabled = true;
+            _roodleAutoMove.enabled = true;
             _roodleController.enabled = false;
+            
             //_roodleAuto.AddNewData(_autoMove.Rotation, _autoMove.Position);
         }
     }

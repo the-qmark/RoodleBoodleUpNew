@@ -17,6 +17,8 @@ public class RoodleController : MonoBehaviour
 
     public RoodleData ActiveRoodle;
 
+
+
     private void Start()
     {
         _rigibody = GetComponent<Rigidbody2D>();
@@ -27,6 +29,12 @@ public class RoodleController : MonoBehaviour
     {
         _currentMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         ActiveRoodle.RoodleFlyEffect.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        _rigibody.velocity = Vector2.zero;
+        
     }
 
     private void Update()
