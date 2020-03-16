@@ -5,12 +5,13 @@ using UnityEngine;
 public class RoodleAutoMove : MonoBehaviour
 {
     [SerializeField] private RoodleController _roodleController;
-    
+    [SerializeField] private ParticleSystem _autoMoveEffect;
+
     private List<AutoMoveInfo> _autoMoveInfo = new List<AutoMoveInfo>();
 
     private int _currentIndex = 0;
 
-    private WaitForSeconds _delay = new WaitForSeconds(0.7f);
+    private WaitForSeconds _delay = new WaitForSeconds(0.3f);
 
     public static bool IsActive;
 
@@ -23,13 +24,16 @@ public class RoodleAutoMove : MonoBehaviour
     {
         _currentIndex = 0;
         IsActive = true;
+        _autoMoveEffect.gameObject.SetActive(true);
         StartCoroutine(Move());
     }
 
     private void OnDisable()
     {
         StopCoroutine(Move());
+        _autoMoveEffect.gameObject.SetActive(false);
         IsActive = false;
+        _autoMoveInfo.Clear();
     }
 
     IEnumerator Move()

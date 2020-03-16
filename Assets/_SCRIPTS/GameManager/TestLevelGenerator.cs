@@ -31,7 +31,7 @@ public class TestLevelGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (_roodle.position.y >= _lines[_bottomLineIndex].transform.position.y + 200)
+        if (_roodle.position.y >= _lines[_bottomLineIndex].transform.position.y + 250)
         {
             _lines[_bottomLineIndex].GetComponent<MainLine>().SetAcitiveTrue();
             _lines[_bottomLineIndex].transform.position = new Vector3(0, _lines[_upLineIndex].transform.position.y + DeltaY, 0);

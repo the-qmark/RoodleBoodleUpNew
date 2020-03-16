@@ -16,8 +16,8 @@ public class RoodleAIMovement : MonoBehaviour
     private float _currentMovementSpeed;
     private float _currentRotateSpeed;
 
-    private float[] _xPosition = { 15f};
-    private float[] _zRotation = { 70, 80 };
+    private float[] _xPosition = { 5f, 10f, 15f, 20f};
+    private float[] _zRotation = { 30, 40, 50, 60, 70, 80 };
 
     private Quaternion newRotate;
     private Vector3 newPosition;
@@ -52,10 +52,10 @@ public class RoodleAIMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!isStop && transform.position.y > _roodle.position.y + 250)
+        if (!isStop && transform.position.y > _roodle.position.y + 500)
             StopMovement?.Invoke();
         
-        if (isStop && transform.position.y < _roodle.position.y + 201)
+        if (isStop && transform.position.y < _roodle.position.y + 550)
             StartMovement?.Invoke();
         
         _step = Time.deltaTime * _currentRotateSpeed;

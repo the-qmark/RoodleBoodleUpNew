@@ -12,7 +12,7 @@ public class PowerUpSpawn : MonoBehaviour
     private RoodleAIMovement _roodleAIMovement;
 
     private bool _autoMoveIsSpawn = false;
-    private int _autoMoveCount = 5;
+    private int _autoMoveCount = 10;
     private float _currentCount = 0;
     private float _chanceForAutoMove;
 
