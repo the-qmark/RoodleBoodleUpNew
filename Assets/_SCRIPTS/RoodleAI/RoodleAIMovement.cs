@@ -52,10 +52,10 @@ public class RoodleAIMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!isStop && transform.position.y > _roodle.position.y + 500)
+        if (!isStop && transform.position.y > _roodle.position.y + 600)
             StopMovement?.Invoke();
         
-        if (isStop && transform.position.y < _roodle.position.y + 550)
+        if (isStop && transform.position.y < _roodle.position.y + 700)
             StartMovement?.Invoke();
         
         _step = Time.deltaTime * _currentRotateSpeed;

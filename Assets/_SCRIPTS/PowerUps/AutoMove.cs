@@ -11,6 +11,14 @@ public class AutoMove : MonoBehaviour
 
     public static bool IsActive;
 
+    public List<AutoMoveInfo> _autoMoveInfo = new List<AutoMoveInfo>();
+
+
+    public void AddData(Quaternion _rotation, Vector3 _position)
+    {
+        _autoMoveInfo.Add(new AutoMoveInfo(_rotation, _position));
+    }
+
 
     private void Start()
     {
@@ -33,5 +41,17 @@ public class AutoMove : MonoBehaviour
         _circleCollider.enabled = false;
         IsActive = false;
         Destroy(gameObject, 3f);
+    }
+}
+
+public class AutoMoveInfo
+{
+    public Quaternion Rotation;
+    public Vector3 Position;
+
+    public AutoMoveInfo(Quaternion _rotation, Vector3 _position)
+    {
+        Rotation = _rotation;
+        Position = _position;
     }
 }

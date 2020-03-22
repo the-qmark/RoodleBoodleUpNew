@@ -39,8 +39,6 @@ public class RoodleController : MonoBehaviour
 
     private void Update()
     {
-
-//#if UNITY_EDITOR
         if(Input.GetMouseButtonDown(0))
         {
             _currentMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -54,13 +52,14 @@ public class RoodleController : MonoBehaviour
             transform.Rotate(Vector3.forward, _deltaRot * _sensitivity * Time.deltaTime);
             _deltaRot = 0;
         }
-//#endif
+
+        transform.Translate(transform.up * _speed * Time.deltaTime, Space.World);
     }
     
 
     private void FixedUpdate()
     {
-        _rigibody.velocity = transform.up * _speed * Time.fixedDeltaTime;
+        //_rigibody.velocity = transform.up * _speed * Time.fixedDeltaTime;
     }
 
 

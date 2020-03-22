@@ -12,7 +12,7 @@ public class PowerUpSpawn : MonoBehaviour
     private RoodleAIMovement _roodleAIMovement;
 
     private bool _autoMoveIsSpawn = false;
-    private int _autoMoveCount = 10;
+    private int _autoMoveCount = 5;
     private float _currentCount = 0;
     private float _chanceForAutoMove;
 
@@ -31,12 +31,14 @@ public class PowerUpSpawn : MonoBehaviour
         }
     }
 
+    AutoMove auto;
+
     private void SpawnAutoMove(Quaternion _rotate, Vector3 _position)
     {
         if (_autoMoveIsSpawn)
         {
             //_roodleAutoController.AddNewData(_rotate, _position, _direction, _moveSpeed, _rotateSpeed);
-            _roodleAutoMove.AddData(_rotate, _position);
+            auto.AddData(_rotate, _position);
             _currentCount--;
 
             if (_currentCount <= 0)
@@ -48,11 +50,11 @@ public class PowerUpSpawn : MonoBehaviour
 
         _chanceForAutoMove = Random.Range(0, 20);
 
-        if (_chanceForAutoMove > 0 && !_autoMoveIsSpawn)
+        if (_chanceForAutoMove > 17 && !_autoMoveIsSpawn)
         {
-            Instantiate(_autoMovePref, transform.position, transform.rotation);
+            auto = Instantiate(_autoMovePref, transform.position, transform.rotation);
             //_roodleAutoController.AddNewData(_rotate, _position, _direction, _moveSpeed, _rotateSpeed);
-            _roodleAutoMove.AddData(_rotate, _position);
+            //auto.AddData(_rotate, _position);
             _currentCount = _autoMoveCount;
             _autoMoveIsSpawn = true;
         }

@@ -22,7 +22,7 @@ public class ScoreCounter : MonoBehaviour
     {
         _currentScore = 0;
         _currretnScoreText.text = _currentScore.ToString("000000");
-        _newStageLimit = 5;
+        _newStageLimit = 100;
         _spawmLimit = 50;
     }
 
@@ -33,8 +33,8 @@ public class ScoreCounter : MonoBehaviour
 
         if ((int)_currentScore >= _newStageLimit)
         {
-            //OnNewStageLimit?.Invoke();
-            _newStageLimit += 5;
+            OnNewStageLimit?.Invoke();
+            _newStageLimit += 100;
         }
 
         if ((int)_currentScore >= _spawmLimit)
