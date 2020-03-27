@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
     {
         if (!isLookAt)
             return;
-
+        //transform.Translate(transform.up * 65 * Time.deltaTime, Space.World);
         newPos = new Vector3(0, Roodle.position.y, -10);
         transform.position = newPos;
         //transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * 50);
