@@ -35,6 +35,7 @@ public class PowerUpSpawn : MonoBehaviour
 
     private void SpawnAutoMove(Quaternion _rotate, Vector3 _position)
     {
+        Debug.Log("asdfsafsaf");
         if (_autoMoveIsSpawn)
         {
             //_roodleAutoController.AddNewData(_rotate, _position, _direction, _moveSpeed, _rotateSpeed);

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class RoodleAutoMove : MonoBehaviour
 {
+    [SerializeField] private float _speed;
     [SerializeField] private RoodleController _roodleController;
-    [SerializeField] private ParticleSystem _autoMoveEffect;
+    [SerializeField] private GameObject _autoMoveEffect;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private CircleCollider2D _circleCollider;
 
@@ -58,7 +59,7 @@ public class RoodleAutoMove : MonoBehaviour
 
     private void Update()
     {
-        step = 200 * Time.deltaTime; // calculate distance to move
+        step = _speed * Time.deltaTime; // calculate distance to move
 
         transform.position = Vector3.MoveTowards(transform.position, _autoMoveInfo[_currentIndex].Position, step);
 

@@ -9,12 +9,19 @@ public class ScoreCounter : MonoBehaviour
     [SerializeField] private Transform _camera;
     [SerializeField] private TMP_Text _currretnScoreText;
 
+    [SerializeField] private int _newStageLimit;
+    [SerializeField] private int _coinLimit;
+    [SerializeField] private int _letterLimit;
+
+    private int _newStageLimitIncrease;
+    private int _coinLimitIncrease;
+    private int _letterLimitIncrease;
+
     public UnityEvent OnNewStageLimit;
-    public UnityEvent OnSpawnLimit;
+    public UnityEvent OnCoinLimit;
+    public UnityEvent OnLetterLimit;
 
-    private int _newStageLimit;
-    private int _spawmLimit;
-
+    
     private float _currentScore;
 
 
@@ -22,8 +29,10 @@ public class ScoreCounter : MonoBehaviour
     {
         _currentScore = 0;
         _currretnScoreText.text = _currentScore.ToString("000000");
-        _newStageLimit = 100;
-        _spawmLimit = 50;
+
+        _newStageLimitIncrease = _newStageLimit;
+        _coinLimitIncrease = _coinLimit;
+        _letterLimitIncrease = _letterLimit;
     }
 
     void Update()
@@ -34,13 +43,19 @@ public class ScoreCounter : MonoBehaviour
         if ((int)_currentScore >= _newStageLimit)
         {
             OnNewStageLimit?.Invoke();
-            _newStageLimit += 100;
+            _newStageLimit += _newStageLimitIncrease;
         }
 
-        if ((int)_currentScore >= _spawmLimit)
+        if ((int)_currentScore >= _coinLimit)
         {
-            OnSpawnLimit?.Invoke();
-            _spawmLimit += 50;
+            OnCoinLimit?.Invoke();
+            _coinLimit += _coinLimitIncrease;
+        }
+
+        if ((int)_currentScore >= _letterLimit)
+        {
+            OnLetterLimit?.Invoke();
+            _letterLimit += _letterLimitIncrease;
         }
     }
 

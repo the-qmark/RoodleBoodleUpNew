@@ -15,7 +15,7 @@ public class RoodleData : MonoBehaviour
     {
         _roodleController = GetComponentInParent<RoodleController>();
         
-        if (DataStorage.CheckActive(gameObject.name))
+        if (DataStorage.CheckActiveRoodle(gameObject.name))
         {
             _roodleController.ActiveRoodle = this;
         }

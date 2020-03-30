@@ -17,11 +17,12 @@ public class RoodleController : MonoBehaviour
 
     public RoodleData ActiveRoodle;
 
-
+    public float Speed { get => _speed; }
 
     private void Start()
     {
         _rigibody = GetComponent<Rigidbody2D>();
+        Debug.Log(transform.rotation.z);
     }
 
 

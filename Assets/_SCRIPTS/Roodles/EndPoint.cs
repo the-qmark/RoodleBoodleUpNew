@@ -14,7 +14,7 @@ public class EndPoint : MonoBehaviour
 
     private void Update()
     {
-        if (transform.localScale.x < 36)
+        if (transform.localScale.x < 42)
             transform.localScale += _scale;
     }
 

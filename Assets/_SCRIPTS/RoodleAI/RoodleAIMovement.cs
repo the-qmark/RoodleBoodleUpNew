@@ -31,6 +31,7 @@ public class RoodleAIMovement : MonoBehaviour
     public event Action StopMovement;
     public event Action<Quaternion, Vector3> SetNewTransform;
 
+    private bool _isAutoMove;
 
     private void Awake()
     {
@@ -64,11 +65,17 @@ public class RoodleAIMovement : MonoBehaviour
 
         if (_dir == DIRECTION.RIGHT) // вправо
         {
+            //if (transform.rotation.z > 0)
+            //    SetNewTransform?.Invoke(transform.rotation, transform.position);
+
             if (transform.position.x >= newPosition.x)
                 SetNewRotateAndPosition(out newRotate, out newPosition);
         }
         else
         {
+            //if (transform.rotation.z < 0)
+            //    SetNewTransform?.Invoke(transform.rotation, transform.position);
+
             if (transform.position.x <= newPosition.x)
                 SetNewRotateAndPosition(out newRotate, out newPosition);
             

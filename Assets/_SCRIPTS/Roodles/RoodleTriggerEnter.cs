@@ -17,12 +17,14 @@ public class RoodleTriggerEnter : MonoBehaviour
     private RoodleController _roodleController;
     private RoodleAutoController _roodleAuto;
     private RoodleAutoMove _roodleAutoMove;
+    private BubbleMove _roodleBubbleMove;
 
     private void Start()
     {
         _roodleController = GetComponent<RoodleController>();
         _roodleAuto = GetComponent<RoodleAutoController>();
         _roodleAutoMove = GetComponent<RoodleAutoMove>();
+        _roodleBubbleMove = GetComponent<BubbleMove>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,11 +53,13 @@ public class RoodleTriggerEnter : MonoBehaviour
             _roodleAutoMove.SetAutoMoveList(_autoMove._autoMoveInfo);
 
             transform.position = _autoMove.transform.position;
-            transform.rotation = _autoMove.transform.rotation;
+            transform.rotation = Quaternion.Euler(0,0,0);
             //_roodleAuto.enabled = true;
-            _roodleAutoMove.enabled = true;
+            //_roodleAutoMove.enabled = true;
+
             _roodleController.enabled = false;
-            
+            _roodleBubbleMove.enabled = true;
+
             //_roodleAuto.AddNewData(_autoMove.Rotation, _autoMove.Position);
         }
     }
