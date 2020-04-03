@@ -31,7 +31,7 @@ public class RoodleTriggerEnter : MonoBehaviour
     {
         if (collision.CompareTag("Hexagon"))
         {
-            GameOver?.Invoke();
+            //GameOver?.Invoke();
             //Debug.Log(transform.rotation.eulerAngles);
         }
 
@@ -46,17 +46,18 @@ public class RoodleTriggerEnter : MonoBehaviour
             _coin.PickUp();
         }
 
-        if (collision.TryGetComponent<AutoMove>(out AutoMove _autoMove))
+        if (collision.TryGetComponent<BubblePickUp>(out BubblePickUp _bubbleMove))
         {
             //Debug.ClearDeveloperConsole();
-            _autoMove.PickUp();
-            _roodleAutoMove.SetAutoMoveList(_autoMove._autoMoveInfo);
+            //_autoMove.PickUp();
+            //_roodleAutoMove.SetAutoMoveList(_autoMove._autoMoveInfo);
 
-            transform.position = _autoMove.transform.position;
-            transform.rotation = Quaternion.Euler(0,0,0);
+
             //_roodleAuto.enabled = true;
             //_roodleAutoMove.enabled = true;
 
+            transform.position = _bubbleMove.transform.position;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
             _roodleController.enabled = false;
             _roodleBubbleMove.enabled = true;
 
@@ -75,7 +76,7 @@ public class RoodleTriggerEnter : MonoBehaviour
         activeRoodle.RoodleGameOverEffect.Play();
 
         _roodleController.enabled = false;
-        _roodleAutoMove.enabled = false;
+        //_roodleAutoMove.enabled = false;
 
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 

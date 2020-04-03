@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class MainSpawner : MonoBehaviour
 {
-    [SerializeField] private CoinSpawner _coinSpawner;
-    [SerializeField] private PowerUpSpawn _powerUpSpawner;
+    [SerializeField] private Coin _coinPref;
+    [SerializeField] private BubblePickUp _bubbleMovePref;
 
     private int _chance;
 
-    public void SpawnStuff()
+    private void SetChance()
     {
         _chance = Random.Range(0, 20);
+    }
 
-        if (_chance > 17)
+    public void SpawnCoin()
+    {
+        SetChance();
+        if (_chance > 0)
         {
-            // powerup
+            GameObject coin = Instantiate(_coinPref.gameObject, transform.position, Quaternion.identity);
+            Destroy(coin, 30);
         }
-        else if (_chance >10)
+        //Debug.Log("Spawn coin  = " + _chance);
+    }
+
+    public void SpawnBubble()
+    {
+        SetChance();
+        if (_chance > 0)
         {
-            _coinSpawner.SpawnCoin();
+            GameObject bubble = Instantiate(_bubbleMovePref.gameObject, transform.position, Quaternion.identity);
+            Destroy(bubble, 30);
         }
     }
+
+    
 }

@@ -7,6 +7,7 @@ TagManager:
   - Hexagon
   - NewStage
   - ActiveRoodle
+  - Bubble
   layers:
   - Default
   - TransparentFX
