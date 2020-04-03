@@ -31,7 +31,7 @@ public class RoodleTriggerEnter : MonoBehaviour
     {
         if (collision.CompareTag("Hexagon"))
         {
-            //GameOver?.Invoke();
+            GameOver?.Invoke();
             //Debug.Log(transform.rotation.eulerAngles);
         }
 
