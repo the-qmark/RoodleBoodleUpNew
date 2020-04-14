@@ -18,6 +18,8 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        //transform.Translate(transform.up * 65 * Time.deltaTime, Space.World);
+
         if (Roodle.position.y >= transform.position.y && !isLookAt)
         {
             //YOffset = Mathf.Abs(transform.position.y - Roodle.position.y);
