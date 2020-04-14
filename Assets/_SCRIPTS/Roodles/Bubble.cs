@@ -6,24 +6,35 @@ public class Bubble : MonoBehaviour
 {
     [SerializeField] private float _deltaScale;
     private Vector3 _scale;
+    private IEnumerator scaleUpDown;
 
     public bool ScaleUp;
+
+
 
     private void Start()
     {
         _scale = new Vector3(_deltaScale, _deltaScale, _deltaScale);
+        
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine("ScaleUpDown");
     }
 
     private void OnDisable()
     {
         transform.localScale = new Vector3(3, 3, 3);
         ScaleUp = false;
+        //StopCoroutine(ScaleUpDown());
     }
-
+    
     private void Update()
     {
         if (ScaleUp)
         {
+            StopCoroutine("ScaleUpDown");
             if (transform.localScale.x < 9)
             {
                 transform.localScale += _scale;
@@ -45,6 +56,18 @@ public class Bubble : MonoBehaviour
         if (collision.CompareTag("Hexagon"))
         {
             collision.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator ScaleUpDown()
+    {
+        Debug.Log("Scale");
+        while (true)
+        {
+            iTween.ScaleTo(gameObject, new Vector3(3.5f, 3.5f, 3.5f), 3f);
+            yield return new WaitForSeconds(0.5f);
+            iTween.ScaleTo(gameObject, new Vector3(2.5f, 2.5f, 2.5f), 3f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
