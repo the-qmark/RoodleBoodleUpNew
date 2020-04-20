@@ -20,13 +20,15 @@ public class Bubble : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine("ScaleUpDown");
+        //StartCoroutine("ScaleUpDown");
+        LeanTween.scale(this.gameObject, new Vector3(4f, 4f, 4f), 0.5f).setLoopPingPong();
     }
 
     private void OnDisable()
     {
         transform.localScale = new Vector3(3, 3, 3);
         ScaleUp = false;
+        LeanTween.cancel(this.gameObject);
         //StopCoroutine(ScaleUpDown());
     }
     
@@ -34,7 +36,8 @@ public class Bubble : MonoBehaviour
     {
         if (ScaleUp)
         {
-            StopCoroutine("ScaleUpDown");
+            LeanTween.cancel(this.gameObject);
+            //StopCoroutine("ScaleUpDown");
             if (transform.localScale.x < 9)
             {
                 transform.localScale += _scale;
@@ -59,15 +62,15 @@ public class Bubble : MonoBehaviour
         }
     }
 
-    IEnumerator ScaleUpDown()
-    {
-        Debug.Log("Scale");
-        while (true)
-        {
-            iTween.ScaleTo(gameObject, new Vector3(3.5f, 3.5f, 3.5f), 3f);
-            yield return new WaitForSeconds(0.5f);
-            iTween.ScaleTo(gameObject, new Vector3(2.5f, 2.5f, 2.5f), 3f);
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
+    //IEnumerator ScaleUpDown()
+    //{
+    //    Debug.Log("Scale");
+    //    while (true)
+    //    {
+    //        iTween.ScaleTo(gameObject, new Vector3(3.5f, 3.5f, 3.5f), 3f);
+    //        yield return new WaitForSeconds(0.5f);
+    //        iTween.ScaleTo(gameObject, new Vector3(2.5f, 2.5f, 2.5f), 3f);
+    //        yield return new WaitForSeconds(0.5f);
+    //    }
+    //}
 }

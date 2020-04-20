@@ -58,10 +58,10 @@ public class RoodleController : MonoBehaviour
     }
     
 
-    private void FixedUpdate()
-    {
-        //_rigibody.velocity = transform.up * _speed * Time.fixedDeltaTime;
-    }
+    //private void FixedUpdate()
+    //{
+    //    _rigibody.velocity = transform.up * _speed * Time.fixedDeltaTime;
+    //}
 
 
     public void OnReachedNewStage()

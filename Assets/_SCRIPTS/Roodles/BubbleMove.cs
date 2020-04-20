@@ -72,10 +72,7 @@ public class BubbleMove : MonoBehaviour
                 }
 
             }
-        }
-
-        
-            
+        }           
     }
 
     private void GetNewPosition()

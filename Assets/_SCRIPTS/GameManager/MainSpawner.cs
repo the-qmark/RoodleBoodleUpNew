@@ -7,28 +7,26 @@ public class MainSpawner : MonoBehaviour
     [SerializeField] private Coin _coinPref;
     [SerializeField] private BubblePickUp _bubbleMovePref;
 
-    private int _chance;
 
-    private void SetChance()
+    private int GetChance()
     {
-        _chance = Random.Range(0, 20);
+        return Random.Range(0, 20);
     }
+
 
     public void SpawnCoin()
     {
-        SetChance();
-        if (_chance > 0)
+        if (GetChance() > 8)
         {
             GameObject coin = Instantiate(_coinPref.gameObject, transform.position, Quaternion.identity);
             Destroy(coin, 30);
         }
-        //Debug.Log("Spawn coin  = " + _chance);
     }
+
 
     public void SpawnBubble()
     {
-        SetChance();
-        if (_chance > 0)
+        if (GetChance() > 15)
         {
             GameObject bubble = Instantiate(_bubbleMovePref.gameObject, transform.position, Quaternion.identity);
             Destroy(bubble, 30);
