@@ -10,17 +10,19 @@ public class ScoreCounter : MonoBehaviour
     [SerializeField] private TMP_Text _currretnScoreText;
     [Space]
     [SerializeField] private int _spawnLimit;
-    //[SerializeField] private int _newStageLimit;
+    [SerializeField] private int _newStageLimit;
     //[SerializeField] private int _coinLimit;
     //[SerializeField] private int _bubbleLimit;
     //[SerializeField] private int _letterLimit;
 
     private int _spawnLimitIncrease;
+    private int _newStageLimitIncrease;
     //private int _coinLimitIncrease;
     //private int _bubbleLimitIncrease;
     //private int _letterLimitIncrease;
     
     public UnityEvent SpawnLimit;
+    public UnityEvent NewStageimit;
     //public UnityEvent OnCoinLimit;
     //public UnityEvent OnBubbleLimit;
     //public UnityEvent OnLetterLimit;
@@ -35,6 +37,7 @@ public class ScoreCounter : MonoBehaviour
         _currretnScoreText.text = _currentScore.ToString("000000");
 
         _spawnLimitIncrease = _spawnLimit;
+        _newStageLimitIncrease = _newStageLimit;
         //_coinLimitIncrease = _coinLimit;
         //_bubbleLimitIncrease = _bubbleLimit*3;
         //_letterLimitIncrease = _letterLimit;
@@ -49,6 +52,12 @@ public class ScoreCounter : MonoBehaviour
         {
             SpawnLimit?.Invoke();
             _spawnLimit += _spawnLimitIncrease;
+        }
+
+        if ((int)_currentScore >= _newStageLimit)
+        {
+            NewStageimit?.Invoke();
+            _newStageLimit += _newStageLimitIncrease;
         }
 
         //if ((int)_currentScore >= _coinLimit)
