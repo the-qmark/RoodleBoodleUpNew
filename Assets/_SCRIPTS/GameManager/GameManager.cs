@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
-    public UnityEvent GameStarted;
+    public UnityAction GameStarted;
 
     private void Update()
     {

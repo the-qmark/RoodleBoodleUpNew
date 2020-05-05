@@ -12,7 +12,7 @@ public class Coin : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 20f);
+        //Destroy(gameObject, 20f);
     }
 
     public void PickUp()
@@ -21,7 +21,7 @@ public class Coin : MonoBehaviour
         _pickUpEffect.SetActive(true);
         _spriteRenderer.enabled = false;
         _circleCollider.enabled = false;
-        Destroy(gameObject, 3f);
+        //Destroy(gameObject, 3f);
     }
 
 

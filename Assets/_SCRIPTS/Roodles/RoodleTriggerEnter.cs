@@ -10,36 +10,41 @@ public class RoodleTriggerEnter : MonoBehaviour
 {
     public ParticleSystem GameOverEffect;
     public GameObject mainRoodle;
+    [SerializeField] private ScoreCounter _scoreCounter;
+    [SerializeField] private AdForSecondLife _adForSecondLife;
 
-    public UnityEvent GameOver;
-    public UnityEvent ReachedNewStage;
+    public UnityAction GameOver;
+    public UnityAction ReachedNewStage;
 
     private RoodleController _roodleController;
-    private RoodleAutoController _roodleAuto;
-    private RoodleAutoMove _roodleAutoMove;
     private BubbleMove _roodleBubbleMove;
+
+    //private IEnumerator RestartCoroutine;
+
+    private void OnEnable()
+    {
+        GameOver += OnGameOver;
+    }
+
+    private void OnDisable()
+    {
+        GameOver -= OnGameOver;
+    }
 
     private void Start()
     {
         _roodleController = GetComponent<RoodleController>();
-        _roodleAuto = GetComponent<RoodleAutoController>();
-        _roodleAutoMove = GetComponent<RoodleAutoMove>();
         _roodleBubbleMove = GetComponent<BubbleMove>();
+        //RestartCoroutine = Restart();
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Hexagon"))
         {
-            //GameOver?.Invoke();
-            //Debug.Log(transform.rotation.eulerAngles);
+            GameOver?.Invoke();
         }
-
-        //if (collision.CompareTag("NewStage"))
-        //{
-        //    ReachedNewStage?.Invoke();
-        //    Destroy(collision.gameObject);
-        //}
 
         if (collision.TryGetComponent<Coin>(out Coin _coin))
         {
@@ -48,46 +53,37 @@ public class RoodleTriggerEnter : MonoBehaviour
 
         if (collision.TryGetComponent<BubblePickUp>(out BubblePickUp _bubbleMove))
         {
-            //Debug.ClearDeveloperConsole();
-            //_autoMove.PickUp();
-            //_roodleAutoMove.SetAutoMoveList(_autoMove._autoMoveInfo);
-
-
-            //_roodleAuto.enabled = true;
-            //_roodleAutoMove.enabled = true;
-
             transform.position = _bubbleMove.transform.position;
             transform.rotation = Quaternion.Euler(0, 0, 0);
             _roodleController.enabled = false;
             _roodleBubbleMove.enabled = true;
-
-            //_roodleAuto.AddNewData(_autoMove.Rotation, _autoMove.Position);
         }
     }
 
+
     public void OnGameOver()
     {
-        //GameOverEffect.Play();
-        //mainRoodle.SetActive(false);
         RoodleData activeRoodle = _roodleController.ActiveRoodle;
 
-        activeRoodle.RoodleSprite.enabled = false;
-        activeRoodle.RoodleFlyEffect.SetActive(false);
-        activeRoodle.RoodleGameOverEffect.Play();
+        activeRoodle.Image.enabled = false;
+        activeRoodle.FlyEffect.SetActive(false);
+        activeRoodle.GameOverEffect.Play();
 
         _roodleController.enabled = false;
-        //_roodleAutoMove.enabled = false;
 
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
-        //Coroutine a = ReloadScene;
-
-        StartCoroutine("ReloadScene");
     }
 
-    IEnumerator ReloadScene()
-    {
-        yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+
+    //public void RestartGame()
+    //{
+    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    //}
+
+
+    //IEnumerator Restart()
+    //{
+    //    yield return new WaitForSeconds(2f);
+    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    //}
 }

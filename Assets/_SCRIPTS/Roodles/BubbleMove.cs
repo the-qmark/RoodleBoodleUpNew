@@ -20,11 +20,13 @@ public class BubbleMove : MonoBehaviour
     private float _upSpeed;
     private float _step;
 
+
     private void Start()
     {
         //_roodleController = GetComponent<RoodleController>();
         //Debug.Log("bbbb");
     }
+
 
     private void OnEnable()
     {
@@ -35,6 +37,7 @@ public class BubbleMove : MonoBehaviour
         GetComponent<CircleCollider2D>().enabled = false;
         GetNewPosition();
     }
+
 
     private void Update()
     {
@@ -74,6 +77,7 @@ public class BubbleMove : MonoBehaviour
             }
         }           
     }
+
 
     private void GetNewPosition()
     {

@@ -12,6 +12,8 @@ public class RoodleAIMovement : MonoBehaviour
     [SerializeField] private float _increaseRotateSpeed;
     [Space]
     [SerializeField] private Transform _roodle;
+    [Space]
+    [SerializeField] private ScoreCounter _scoreCounter;
 
     private float _currentMovementSpeed;
     private float _currentRotateSpeed;
@@ -41,6 +43,15 @@ public class RoodleAIMovement : MonoBehaviour
         _currentRotateSpeed = _rotateSpeed;
     }
 
+    private void OnEnable()
+    {
+        _scoreCounter.NewStageReached += OnReachedNewStage;
+    }
+
+    private void OnDisable()
+    {
+        _scoreCounter.NewStageReached -= OnReachedNewStage;
+    }
 
     private void Start()
     {
@@ -53,10 +64,10 @@ public class RoodleAIMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!isStop && transform.position.y > _roodle.position.y + 600)
+        if (!isStop && transform.position.y > _roodle.position.y + 260)
             StopMovement?.Invoke();
         
-        if (isStop && transform.position.y < _roodle.position.y + 700)
+        if (isStop && transform.position.y < _roodle.position.y + 300)
             StartMovement?.Invoke();
         
         _step = Time.deltaTime * _currentRotateSpeed;
@@ -80,12 +91,14 @@ public class RoodleAIMovement : MonoBehaviour
                 SetNewRotateAndPosition(out newRotate, out newPosition);
             
         }
+
+        transform.Translate(transform.up * _currentMovementSpeed * Time.deltaTime, Space.World);
     }
 
 
     private void FixedUpdate()
     {
-        _rigibody.velocity = transform.up * _currentMovementSpeed * Time.deltaTime;
+        //_rigibody.velocity = transform.up * _currentMovementSpeed * Time.deltaTime;
     }
 
     /// <summary>
@@ -119,7 +132,7 @@ public class RoodleAIMovement : MonoBehaviour
         _currentMovementSpeed = 0;
         _currentRotateSpeed = 0;
         isStop = true;
-
+        //transform.Translate(transform.up * _currentMovementSpeed * Time.deltaTime, Space.World);
     }
 
 

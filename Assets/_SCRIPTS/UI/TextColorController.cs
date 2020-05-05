@@ -8,7 +8,6 @@ public class TextColorController : MonoBehaviour
     [SerializeField] private ScriptableText _scriptableText;
 
     private TMP_Text _text;
-    
 
     void Start()
     {

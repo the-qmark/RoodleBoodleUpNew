@@ -6,82 +6,61 @@ using TMPro;
 
 public class ScoreCounter : MonoBehaviour
 {
+    [SerializeField] private RoodleTriggerEnter _roodleTrigger;
     [SerializeField] private Transform _camera;
     [SerializeField] private TMP_Text _currretnScoreText;
     [Space]
     [SerializeField] private int _spawnLimit;
     [SerializeField] private int _newStageLimit;
-    //[SerializeField] private int _coinLimit;
-    //[SerializeField] private int _bubbleLimit;
-    //[SerializeField] private int _letterLimit;
 
     private int _spawnLimitIncrease;
     private int _newStageLimitIncrease;
-    //private int _coinLimitIncrease;
-    //private int _bubbleLimitIncrease;
-    //private int _letterLimitIncrease;
-    
-    public UnityEvent SpawnLimit;
-    public UnityEvent NewStageimit;
-    //public UnityEvent OnCoinLimit;
-    //public UnityEvent OnBubbleLimit;
-    //public UnityEvent OnLetterLimit;
 
-    
-    private float _currentScore;
+    public UnityAction SpawnLimitReached;
+    public UnityAction NewStageReached;
 
+    public int CurrentScore { get; private set; }
+
+
+    private void OnEnable()
+    {
+        _roodleTrigger.GameOver += OnGameOver;
+    }
+
+    private void OnDisable()
+    {
+        _roodleTrigger.GameOver -= OnGameOver;
+    }
 
     void Start()
     {
-        _currentScore = 0;
-        _currretnScoreText.text = _currentScore.ToString("000000");
+        CurrentScore = 0;
+        _currretnScoreText.text = CurrentScore.ToString("000000");
 
         _spawnLimitIncrease = _spawnLimit;
         _newStageLimitIncrease = _newStageLimit;
-        //_coinLimitIncrease = _coinLimit;
-        //_bubbleLimitIncrease = _bubbleLimit*3;
-        //_letterLimitIncrease = _letterLimit;
     }
 
     void Update()
     {
-        _currentScore = _camera.position.y * 0.2f;
-        _currretnScoreText.text = _currentScore.ToString("000000");
+        CurrentScore = (int)(_camera.position.y * 0.2f);
+        _currretnScoreText.text = CurrentScore.ToString("000000");
 
-        if ((int)_currentScore >= _spawnLimit)
+        if (CurrentScore >= _spawnLimit)
         {
-            SpawnLimit?.Invoke();
+            SpawnLimitReached?.Invoke();
             _spawnLimit += _spawnLimitIncrease;
         }
 
-        if ((int)_currentScore >= _newStageLimit)
+        if (CurrentScore >= _newStageLimit)
         {
-            NewStageimit?.Invoke();
+            NewStageReached?.Invoke();
             _newStageLimit += _newStageLimitIncrease;
         }
-
-        //if ((int)_currentScore >= _coinLimit)
-        //{
-        //    OnCoinLimit?.Invoke();
-        //    _coinLimit += _coinLimitIncrease;
-        //    //Debug.Log("OnCoin");
-        //}
-
-        //if ((int)_currentScore >= _bubbleLimit)
-        //{
-        //    OnBubbleLimit?.Invoke();
-        //    _bubbleLimit += _bubbleLimitIncrease;
-        //}
-
-        //if ((int)_currentScore >= _letterLimit)
-        //{
-        //    OnLetterLimit?.Invoke();
-        //    _letterLimit += _letterLimitIncrease;
-        //}
     }
 
     public void OnGameOver()
     {
-        DataStorage.UpdateMaxScore((int)_currentScore);
+        DataStorage.UpdateMaxScore(CurrentScore);
     }
 }

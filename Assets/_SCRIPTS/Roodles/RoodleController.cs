@@ -9,8 +9,10 @@ public class RoodleController : MonoBehaviour
     [SerializeField] private float _increaseSpeed; // на сколько увеличить скорость при достижении нового этапа
     [Space][SerializeField] private float _sensitivity; // чувствительность поворота
     [Space][SerializeField] private Camera cam;
+    [Space]
+    [SerializeField] private ScoreCounter _scoreCounter;
 
-    private Rigidbody2D _rigibody;
+    //private Rigidbody2D _rigibody;
     private Vector3 _currentMousePos;
     private Vector3 _nextMousePos;
     private float _deltaRot;
@@ -19,24 +21,28 @@ public class RoodleController : MonoBehaviour
 
     public float Speed { get => _speed; }
 
-    private void Start()
+
+    private void Awake()
     {
-        _rigibody = GetComponent<Rigidbody2D>();
-        Debug.Log(transform.rotation.z);
+        //_rigibody = GetComponent<Rigidbody2D>();
     }
 
 
     private void OnEnable()
     {
         _currentMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        ActiveRoodle.RoodleFlyEffect.SetActive(true);
+        ActiveRoodle.FlyEffect.SetActive(true);
+        _scoreCounter.NewStageReached += OnReachedNewStage;
     }
+
 
     private void OnDisable()
     {
-        _rigibody.velocity = Vector2.zero;
-        
+        //_rigibody.velocity = Vector2.zero;
+        _scoreCounter.NewStageReached -= OnReachedNewStage;
+
     }
+
 
     private void Update()
     {
@@ -57,12 +63,6 @@ public class RoodleController : MonoBehaviour
         transform.Translate(transform.up * _speed * Time.deltaTime, Space.World);
     }
     
-
-    //private void FixedUpdate()
-    //{
-    //    _rigibody.velocity = transform.up * _speed * Time.fixedDeltaTime;
-    //}
-
 
     public void OnReachedNewStage()
     {

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class RoodleData : MonoBehaviour
 {
-    public SpriteRenderer RoodleSprite;
-    public GameObject RoodleFlyEffect;
-    public ParticleSystem RoodleGameOverEffect;
+    public SpriteRenderer Image;
+    public GameObject FlyEffect;
+    public ParticleSystem GameOverEffect;
 
-    private RoodleTriggerEnter _roodleTrigger;
+    //private RoodleTriggerEnter _roodleTrigger;
     private RoodleController _roodleController;
 
     private void Awake()
