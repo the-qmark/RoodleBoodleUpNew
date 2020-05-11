@@ -11,10 +11,11 @@ public class MainSpawner : MonoBehaviour
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private GameObject _coinsContainer;
     [SerializeField] private RoodleController _roodle;
+    [SerializeField] private BubbleFollow _bubbleFollow;
 
     private GameObject[] _coinsPool = new GameObject[25];
 
-    private GameObject _bubble;
+    //private BubblePickUp _bubble;
     private Camera _camera;
 
     private int GetChance() => Random.Range(0, 20);
@@ -39,14 +40,13 @@ public class MainSpawner : MonoBehaviour
             _coinsPool[i] = Instantiate(_coinPref.gameObject, transform.position, Quaternion.identity, _coinsContainer.transform);
             _coinsPool[i].SetActive(false);
         }
-    }
 
-
-    private void Start()
-    {
         _camera = Camera.main;
-        _bubble = Instantiate(_bubbleMovePref.gameObject, transform.position, Quaternion.identity);
-        _bubble.SetActive(false);
+
+        //_bubble = Instantiate(_bubbleMovePref, transform.position, Quaternion.identity);
+        //_bubbleFollow.SetBubble(_bubbleMovePref);
+        //_bubbleMovePref.gameObject.SetActive(false);
+        //_bubble.gameObject.SetActive(false);  
     }
 
 
@@ -54,7 +54,7 @@ public class MainSpawner : MonoBehaviour
     {
         int _chance = GetChance();
 
-        if (_chance > -1)
+        if (_chance > 16)
         {
             SpawnBubble();
         }
@@ -98,22 +98,22 @@ public class MainSpawner : MonoBehaviour
             return;
         }
 
-        Vector3 _point = _camera.WorldToViewportPoint(_bubble.transform.position);
+        Vector3 _point = _camera.WorldToViewportPoint(_bubbleMovePref.transform.position);
         //Debug.Log("point = " + _point.y);
 
         if (_point.y < 0)
         {
-            _bubble.SetActive(false);
+            _bubbleMovePref.gameObject.SetActive(false);
         }
 
-        if (_bubble.activeSelf)
+        if (_bubbleMovePref.gameObject.activeSelf)
         {
             return;
         }
         else
         {
-            _bubble.transform.position = transform.position;
-            _bubble.SetActive(true);
+            _bubbleMovePref.transform.position = transform.position;
+            _bubbleMovePref.gameObject.SetActive(true);
         }
     }
 }

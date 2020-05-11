@@ -17,7 +17,8 @@ public class RoodleTriggerEnter : MonoBehaviour
     public UnityAction ReachedNewStage;
 
     private RoodleController _roodleController;
-    private BubbleMove _roodleBubbleMove;
+    //private BubbleMove _roodleBubbleMove;
+    private BubbleFollow _bubbleFollow;
 
     //private IEnumerator RestartCoroutine;
 
@@ -34,7 +35,8 @@ public class RoodleTriggerEnter : MonoBehaviour
     private void Start()
     {
         _roodleController = GetComponent<RoodleController>();
-        _roodleBubbleMove = GetComponent<BubbleMove>();
+       // _roodleBubbleMove = GetComponent<BubbleMove>();
+        _bubbleFollow = GetComponent<BubbleFollow>();
         //RestartCoroutine = Restart();
     }
 
@@ -55,8 +57,10 @@ public class RoodleTriggerEnter : MonoBehaviour
         {
             transform.position = _bubbleMove.transform.position;
             transform.rotation = Quaternion.Euler(0, 0, 0);
+
             _roodleController.enabled = false;
-            _roodleBubbleMove.enabled = true;
+            _bubbleMove.PickUp(_roodleController);
+            _bubbleFollow.enabled = true;
         }
     }
 

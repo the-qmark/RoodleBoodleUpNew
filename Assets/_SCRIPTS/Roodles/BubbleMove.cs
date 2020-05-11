@@ -1,31 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BubbleMove : MonoBehaviour
 {
     [SerializeField] private Bubble _bubble;
+    [SerializeField] RoodleController _roodleController;
+    [SerializeField] CircleCollider2D _collider;
     [SerializeField] private float _sideSpeed;
+    [SerializeField] private int _bubbleJumpCount = 6;
 
-    private int _bubbleJumpCount = 6;
     private int _currentBubbleJumpCount;
     private DIRECTION _dir; // 0 = left
     private Vector2 _vector = Vector2.up;
 
     private float _borderMin = 5;
-    private float _borderMax = 8;
+    private float _borderMax = 30;
     private float _pos;
 
-    [SerializeField] private RoodleController _roodleController;
     private float _upSpeed;
     private float _step;
 
+    public UnityAction AutoMoveStart;
+    public UnityAction AutoMoveEnd;
 
-    private void Start()
-    {
-        //_roodleController = GetComponent<RoodleController>();
-        //Debug.Log("bbbb");
-    }
+    
 
 
     private void OnEnable()
@@ -36,6 +36,16 @@ public class BubbleMove : MonoBehaviour
         _currentBubbleJumpCount = 0;
         GetComponent<CircleCollider2D>().enabled = false;
         GetNewPosition();
+        _collider.enabled = true;
+
+        AutoMoveStart?.Invoke();
+    }
+
+
+    private void OnDisable()
+    {
+        AutoMoveEnd?.Invoke();
+        _collider.enabled = false;
     }
 
 

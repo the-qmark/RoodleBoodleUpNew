@@ -21,6 +21,7 @@ public class Coin : MonoBehaviour
         _pickUpEffect.SetActive(true);
         _spriteRenderer.enabled = false;
         _circleCollider.enabled = false;
+        DataStorage.AddCoin(1);
         //Destroy(gameObject, 3f);
     }
 

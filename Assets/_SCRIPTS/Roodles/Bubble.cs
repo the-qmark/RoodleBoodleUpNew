@@ -38,7 +38,7 @@ public class Bubble : MonoBehaviour
         {
             LeanTween.cancel(this.gameObject);
             //StopCoroutine("ScaleUpDown");
-            if (transform.localScale.x < 9)
+            if (transform.localScale.x < 12)
             {
                 transform.localScale += _scale;
                 transform.Translate(transform.up);

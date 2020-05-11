@@ -5,8 +5,8 @@ using UnityEngine;
 public class DataStorage : MonoBehaviour
 {
     private const string MAX_SCORE = "MaxScore";
-
     private const string ACTIVE_ROODLE = "ActiveRoodle";
+    private const string COINS = "Coins";
     
     
     void Awake()
@@ -17,9 +17,8 @@ public class DataStorage : MonoBehaviour
         if (!PlayerPrefs.HasKey(ACTIVE_ROODLE))
             PlayerPrefs.SetString(ACTIVE_ROODLE, "MAIN_ROODLE_PREFAB");
 
-        //SetActiveLetter("R-1");
-        //SetActiveLetter("O-2");
-
+        if (!PlayerPrefs.HasKey(COINS))
+            PlayerPrefs.SetInt(COINS, 0);
     }
 
 
@@ -42,17 +41,6 @@ public class DataStorage : MonoBehaviour
     public static bool CheckActiveRoodle(string _name)
     {
         return PlayerPrefs.GetString(ACTIVE_ROODLE) == _name ? true : false;
-
-        //if (PlayerPrefs.GetString(AcvtiveRoodle) == _name)
-        //{
-        //    return true;
-        //}
-        //else
-        //{
-        //    return false;
-        //}
-
-        //return PlayerPrefs.GetString(AcvtiveRoodle);
     }
 
     public static void SetActiveLetter(string _name)
@@ -65,9 +53,9 @@ public class DataStorage : MonoBehaviour
         return PlayerPrefs.GetInt(_name) == 1 ? true : false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void AddCoin(int value)
     {
-        
+        value += PlayerPrefs.GetInt(COINS);
+        PlayerPrefs.SetInt(COINS, value);
     }
 }

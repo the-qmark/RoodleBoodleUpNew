@@ -8,7 +8,6 @@ public class RoodleData : MonoBehaviour
     public GameObject FlyEffect;
     public ParticleSystem GameOverEffect;
 
-    //private RoodleTriggerEnter _roodleTrigger;
     private RoodleController _roodleController;
 
     private void Awake()
@@ -18,6 +17,10 @@ public class RoodleData : MonoBehaviour
         if (DataStorage.CheckActiveRoodle(gameObject.name))
         {
             _roodleController.ActiveRoodle = this;
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 }

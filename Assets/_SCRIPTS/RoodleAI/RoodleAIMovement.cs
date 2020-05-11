@@ -14,6 +14,7 @@ public class RoodleAIMovement : MonoBehaviour
     [SerializeField] private Transform _roodle;
     [Space]
     [SerializeField] private ScoreCounter _scoreCounter;
+    [SerializeField] private BubbleMove _bubbleMove;
 
     private float _currentMovementSpeed;
     private float _currentRotateSpeed;
@@ -27,7 +28,7 @@ public class RoodleAIMovement : MonoBehaviour
     private DIRECTION _dir;
     private float _step;
     private Rigidbody2D _rigibody;
-    private bool isStop;
+    public bool isStop;
 
     public event Action StartMovement;
     public event Action StopMovement;
@@ -37,8 +38,8 @@ public class RoodleAIMovement : MonoBehaviour
 
     private void Awake()
     {
-        StartMovement += OnStartMovement;
-        StopMovement += OnStopMovement;
+        //StartMovement += OnStartMovement;
+        //StopMovement += OnStopMovement;
         _currentMovementSpeed = _movementSpeed;
         _currentRotateSpeed = _rotateSpeed;
     }
@@ -46,11 +47,15 @@ public class RoodleAIMovement : MonoBehaviour
     private void OnEnable()
     {
         _scoreCounter.NewStageReached += OnReachedNewStage;
+        _bubbleMove.AutoMoveStart += OnAutoMoveStart;
+        _bubbleMove.AutoMoveEnd += OnAutoMoveEnd;
     }
 
     private void OnDisable()
     {
         _scoreCounter.NewStageReached -= OnReachedNewStage;
+        _bubbleMove.AutoMoveStart -= OnAutoMoveStart;
+        _bubbleMove.AutoMoveEnd -= OnAutoMoveEnd;
     }
 
     private void Start()
@@ -65,10 +70,16 @@ public class RoodleAIMovement : MonoBehaviour
     private void Update()
     {
         if (!isStop && transform.position.y > _roodle.position.y + 260)
-            StopMovement?.Invoke();
+        {
+            isStop = !isStop;
+            return;
+        }
         
         if (isStop && transform.position.y < _roodle.position.y + 300)
-            StartMovement?.Invoke();
+        {
+            isStop = !isStop;
+            return;
+        }
         
         _step = Time.deltaTime * _currentRotateSpeed;
         
@@ -119,21 +130,21 @@ public class RoodleAIMovement : MonoBehaviour
     }
 
 
-    private void OnStartMovement()
-    {
-        _currentMovementSpeed = _movementSpeed;
-        _currentRotateSpeed = _rotateSpeed;
-        isStop = false;
-    }
+    //private void OnStartMovement()
+    //{
+    //    _currentMovementSpeed = _movementSpeed;
+    //    _currentRotateSpeed = _rotateSpeed;
+    //    isStop = false;
+    //}
 
 
-    private void OnStopMovement()
-    {
-        _currentMovementSpeed = 0;
-        _currentRotateSpeed = 0;
-        isStop = true;
-        //transform.Translate(transform.up * _currentMovementSpeed * Time.deltaTime, Space.World);
-    }
+    //private void OnStopMovement()
+    //{
+    //    _currentMovementSpeed = 0;
+    //    _currentRotateSpeed = 0;
+    //    isStop = true;
+    //    //transform.Translate(transform.up * _currentMovementSpeed * Time.deltaTime, Space.World);
+    //}
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -150,8 +161,33 @@ public class RoodleAIMovement : MonoBehaviour
         _movementSpeed += _increaseMovementSpeed;
         _rotateSpeed += _increaseRotateSpeed;
 
-        if (isStop)
-            return;
+        //if (isStop)
+        //    return;
+
+        _currentMovementSpeed = _movementSpeed;
+        _currentRotateSpeed = _rotateSpeed;
+    }
+
+
+    private void OnAutoMoveStart()
+    {
+        _movementSpeed += 40;
+        _rotateSpeed += 160;
+
+        //if (isStop)
+        //    return;
+
+        _currentMovementSpeed = _movementSpeed;
+        _currentRotateSpeed = _rotateSpeed;
+    }
+
+    private void OnAutoMoveEnd()
+    {
+        _movementSpeed -= 40;
+        _rotateSpeed -= 160;
+
+        //if (isStop)
+        //    return;
 
         _currentMovementSpeed = _movementSpeed;
         _currentRotateSpeed = _rotateSpeed;
