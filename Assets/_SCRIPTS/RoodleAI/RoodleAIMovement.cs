@@ -69,18 +69,24 @@ public class RoodleAIMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!isStop && transform.position.y > _roodle.position.y + 260)
+        //if (!isStop && transform.position.y > _roodle.position.y + 260)
+        //{
+        //    isStop = !isStop;
+        //    return;
+        //}
+        
+        //if (isStop && transform.position.y < _roodle.position.y + 300)
+        //{
+        //    isStop = !isStop;
+        //    return;
+        //}
+
+        if (transform.position.y > _roodle.position.y + 260)
         {
-            isStop = !isStop;
+            //isStop = !isStop;
             return;
         }
-        
-        if (isStop && transform.position.y < _roodle.position.y + 300)
-        {
-            isStop = !isStop;
-            return;
-        }
-        
+
         _step = Time.deltaTime * _currentRotateSpeed;
         
         transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotate, _step);

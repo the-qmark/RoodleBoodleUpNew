@@ -5,10 +5,12 @@ using UnityEngine;
 public class BubbleFollow : MonoBehaviour
 {
     [SerializeField] private BubbleMove _bubble;
+    [SerializeField] private CircleCollider2D _collider2D;
 
     private void OnEnable()
     {
         _bubble.AutoMoveEnd += OnAutoMoveEnd;
+        _collider2D.enabled = false;
     }
 
     private void OnDisable()
@@ -24,5 +26,6 @@ public class BubbleFollow : MonoBehaviour
     private void OnAutoMoveEnd()
     {
         enabled = false;
+        _collider2D.enabled = true;
     }
 }

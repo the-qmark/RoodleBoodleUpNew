@@ -48,7 +48,7 @@ public class RoodleTriggerEnter : MonoBehaviour
             GameOver?.Invoke();
         }
 
-        if (collision.TryGetComponent<Coin>(out Coin _coin))
+        if (collision.TryGetComponent<CoinPickUp>(out CoinPickUp _coin))
         {
             _coin.PickUp();
         }

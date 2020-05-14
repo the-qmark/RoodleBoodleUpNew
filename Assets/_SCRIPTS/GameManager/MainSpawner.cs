@@ -5,7 +5,7 @@ using System.Linq;
 
 public class MainSpawner : MonoBehaviour
 {
-    [SerializeField] private Coin _coinPref;
+    [SerializeField] private CoinPickUp _coinPickUp;
     [SerializeField] private BubblePickUp _bubbleMovePref;
     [Space]
     [SerializeField] private ScoreCounter _scoreCounter;
@@ -13,7 +13,7 @@ public class MainSpawner : MonoBehaviour
     [SerializeField] private RoodleController _roodle;
     [SerializeField] private BubbleFollow _bubbleFollow;
 
-    private GameObject[] _coinsPool = new GameObject[25];
+    private CoinPickUp[] _coinsPool = new CoinPickUp[10];
 
     //private BubblePickUp _bubble;
     private Camera _camera;
@@ -37,8 +37,8 @@ public class MainSpawner : MonoBehaviour
     {
         for (int i = 0; i < _coinsPool.Length; i++)
         {
-            _coinsPool[i] = Instantiate(_coinPref.gameObject, transform.position, Quaternion.identity, _coinsContainer.transform);
-            _coinsPool[i].SetActive(false);
+            _coinsPool[i] = Instantiate(_coinPickUp, transform.position, Quaternion.identity, _coinsContainer.transform);
+            _coinsPool[i].gameObject.SetActive(false);
         }
 
         _camera = Camera.main;
@@ -54,7 +54,7 @@ public class MainSpawner : MonoBehaviour
     {
         int _chance = GetChance();
 
-        if (_chance > 16)
+        if (_chance > 17)
         {
             SpawnBubble();
         }
@@ -70,23 +70,24 @@ public class MainSpawner : MonoBehaviour
     {
         Vector3 _point = new Vector3();
 
-        foreach (GameObject coin in _coinsPool)
+        foreach (CoinPickUp coinPickUp in _coinsPool)
         {
-            if (coin.activeSelf == true)
+            if (coinPickUp.gameObject.activeSelf == true)
             {
-                _point = _camera.WorldToViewportPoint(coin.transform.position);
+                _point = _camera.WorldToViewportPoint(coinPickUp.transform.position);
 
                 if (_point.y < 0)
-                    coin.SetActive(false);
+                    coinPickUp.gameObject.SetActive(false);
             }
         }
 
-        GameObject _coin = _coinsPool.FirstOrDefault(c => c.activeSelf == false);
+        CoinPickUp _coinPickUp = _coinsPool.FirstOrDefault(c => c.gameObject.activeSelf == false);
 
-        if (_coin != null)
+        if (_coinPickUp != null)
         {
-            _coin.transform.position = transform.position;
-            _coin.SetActive(true);
+            _coinPickUp.gameObject.transform.position = transform.position;
+            _coinPickUp.gameObject.SetActive(true);
+            _coinPickUp.ResetState();
         }
     }
 

@@ -58,4 +58,9 @@ public class DataStorage : MonoBehaviour
         value += PlayerPrefs.GetInt(COINS);
         PlayerPrefs.SetInt(COINS, value);
     }
+
+    public static int GetCoinsCount()
+    {
+        return PlayerPrefs.GetInt(COINS);
+    }
 }

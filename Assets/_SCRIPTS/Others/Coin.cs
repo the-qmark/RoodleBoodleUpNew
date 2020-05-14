@@ -20,10 +20,15 @@ public class Coin : MonoBehaviour
         _idleEffect.SetActive(false);
         _pickUpEffect.SetActive(true);
         _spriteRenderer.enabled = false;
-        _circleCollider.enabled = false;
+        //_circleCollider.enabled = false;
         DataStorage.AddCoin(1);
-        //Destroy(gameObject, 3f);
     }
 
+    public void ResetState()
+    {
+        _spriteRenderer.enabled = true;
+        _idleEffect.SetActive(true);
+        _pickUpEffect.SetActive(false);
+    }
 
 }
