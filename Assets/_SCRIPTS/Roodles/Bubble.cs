@@ -21,7 +21,7 @@ public class Bubble : MonoBehaviour
     private void OnEnable()
     {
         //StartCoroutine("ScaleUpDown");
-        LeanTween.scale(this.gameObject, new Vector3(4f, 4f, 4f), 0.5f).setLoopPingPong();
+        LeanTween.scale(this.gameObject, new Vector3(4f, 4f, 4f), 0.3f).setLoopPingPong();
     }
 
     private void OnDisable()

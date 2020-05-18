@@ -91,9 +91,12 @@ public class BubbleMove : MonoBehaviour
 
     private void GetNewPosition()
     {
-        _pos = Random.Range(_borderMin, _borderMax) * (int)_dir;
+        //_pos = Random.Range(_borderMin, _borderMax) * (int)_dir;
+        _pos = 5 * (int)_dir;
         _vector = new Vector2(_pos * _sideSpeed, 1 * _upSpeed);
+
         _currentBubbleJumpCount++;
+
         if (_currentBubbleJumpCount == _bubbleJumpCount)
         {
             _vector = new Vector2(0, transform.position.y + 50);
