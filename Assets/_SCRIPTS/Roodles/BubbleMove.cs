@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class BubbleMove : MonoBehaviour
 {
+    [SerializeField] private AutoMoveForce _moveForce;
     [SerializeField] private Bubble _bubble;
     [SerializeField] RoodleController _roodleController;
     [SerializeField] CircleCollider2D _collider;
@@ -30,7 +31,9 @@ public class BubbleMove : MonoBehaviour
 
     private void OnEnable()
     {
-        _bubble.gameObject.SetActive(true);
+        //_bubble.gameObject.SetActive(true);
+        _moveForce.ScaleUp();
+
         _dir = transform.position.x > 0 ? DIRECTION.LEFT : DIRECTION.RIGHT;
         _upSpeed = _roodleController.Speed + 40;
         _currentBubbleJumpCount = 0;
@@ -44,7 +47,7 @@ public class BubbleMove : MonoBehaviour
 
     private void OnDisable()
     {
-        AutoMoveEnd?.Invoke();
+        //AutoMoveEnd?.Invoke();
         _collider.enabled = false;
     }
 
@@ -60,8 +63,9 @@ public class BubbleMove : MonoBehaviour
             {
                 //_bubble.gameObject.SetActive(false);
                 GetComponent<CircleCollider2D>().enabled = true;
-                _roodleController.enabled = true;
+                //_roodleController.enabled = true;
                 this.enabled = false;
+                //_moveForce.ScaleDown();
             }
         }
         else
@@ -99,7 +103,13 @@ public class BubbleMove : MonoBehaviour
 
         if (_currentBubbleJumpCount == _bubbleJumpCount)
         {
-            _vector = new Vector2(0, transform.position.y + 50);
+            _vector = new Vector2(0, transform.position.y + 150);
+            _upSpeed = _roodleController.Speed + 80;
+            _moveForce.ScaleDown();
+            //Debug.Log("50");
+            AutoMoveEnd?.Invoke();
+            _roodleController.enabled = true;
+            //_vector = new Vector2(0, transform.position.y);
             _bubble.ScaleUp = true;
         }
     }

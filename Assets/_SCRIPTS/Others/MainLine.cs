@@ -31,5 +31,7 @@ public class MainLine : MonoBehaviour
     public void SetAcitiveTrue()
     {
         _hexagons.ForEach(p => p.SetActive(true));
+        _hexagons.ForEach(p => p.transform.localScale = new Vector3(1,1,1));
+        
     }
 }

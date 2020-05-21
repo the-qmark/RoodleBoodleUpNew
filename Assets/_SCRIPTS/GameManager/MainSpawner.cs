@@ -54,7 +54,7 @@ public class MainSpawner : MonoBehaviour
     {
         int _chance = GetChance();
 
-        if (_chance > 17)
+        if (_chance > 16)
         {
             SpawnBubble();
         }
@@ -113,7 +113,8 @@ public class MainSpawner : MonoBehaviour
         }
         else
         {
-            _bubbleMovePref.transform.position = transform.position;
+            //_bubbleMovePref.transform.position = transform.position;
+            _bubbleMovePref.NewPosition(transform.position);
             _bubbleMovePref.gameObject.SetActive(true);
         }
     }

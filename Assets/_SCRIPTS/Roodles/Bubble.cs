@@ -21,14 +21,14 @@ public class Bubble : MonoBehaviour
     private void OnEnable()
     {
         //StartCoroutine("ScaleUpDown");
-        LeanTween.scale(this.gameObject, new Vector3(4f, 4f, 4f), 0.3f).setLoopPingPong();
+        //LeanTween.scale(this.gameObject, new Vector3(4f, 4f, 4f), 0.3f).setLoopPingPong();
     }
 
     private void OnDisable()
     {
         transform.localScale = new Vector3(3, 3, 3);
         ScaleUp = false;
-        LeanTween.cancel(this.gameObject);
+        //LeanTween.cancel(this.gameObject);
         //StopCoroutine(ScaleUpDown());
     }
     
@@ -53,13 +53,20 @@ public class Bubble : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!ScaleUp)
-            return;
+        if (collision.TryGetComponent<CoinPickUp>(out CoinPickUp coin))
+        {
+            coin.PickUp();
+        }
+
+        //if (!ScaleUp)
+        //    return;
 
         if (collision.CompareTag("Hexagon"))
         {
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
+            LeanTween.scale(collision.gameObject, Vector3.zero, 0.3f);
         }
+
     }
 
     //IEnumerator ScaleUpDown()
