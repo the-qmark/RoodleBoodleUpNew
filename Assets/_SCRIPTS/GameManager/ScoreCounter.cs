@@ -12,14 +12,19 @@ public class ScoreCounter : MonoBehaviour
     [Space]
     [SerializeField] private int _spawnLimit;
     [SerializeField] private int _newStageLimit;
+    [SerializeField] private int _newColorLimit;
 
-    private int _spawnLimitIncrease;
-    private int _newStageLimitIncrease;
 
     public UnityAction SpawnLimitReached;
     public UnityAction NewStageReached;
+    public UnityAction ColorLimitReached;
 
     public int CurrentScore { get; private set; }
+
+
+    private int _spawnLimitIncrease;
+    private int _newStageLimitIncrease;
+    private int _newColorLimitIncrease;
 
 
     private void OnEnable()
@@ -39,6 +44,7 @@ public class ScoreCounter : MonoBehaviour
 
         _spawnLimitIncrease = _spawnLimit;
         _newStageLimitIncrease = _newStageLimit;
+        _newColorLimitIncrease = _newColorLimit;
     }
 
     void Update()
@@ -56,6 +62,12 @@ public class ScoreCounter : MonoBehaviour
         {
             NewStageReached?.Invoke();
             _newStageLimit += _newStageLimitIncrease;
+        }
+
+        if (CurrentScore >= _newColorLimit)
+        {
+            ColorLimitReached?.Invoke();
+            _newColorLimit += _newColorLimitIncrease;
         }
     }
 
