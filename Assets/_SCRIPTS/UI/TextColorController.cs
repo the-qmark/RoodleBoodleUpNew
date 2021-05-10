@@ -6,10 +6,29 @@ using TMPro;
 public class TextColorController : MonoBehaviour
 {
     [SerializeField] private ScriptableText _scriptableText;
+    //[SerializeField] private ColorController colorController;
 
     private TMP_Text _text;
 
+
+    private void OnEnable()
+    {
+        ColorController.ColorChanged += ChangeColor;
+        //colorController.ColorChanged += ChangeColor;
+    }
+
+    private void OnDisable()
+    {
+        ColorController.ColorChanged -= ChangeColor;
+    }
+
     void Start()
+    {
+        ChangeColor();
+    }
+
+
+    private void ChangeColor()
     {
         TryGetComponent<TMP_Text>(out _text);
 
@@ -20,6 +39,6 @@ public class TextColorController : MonoBehaviour
         float _b = clr.b;
         float _a = _text.color.a;
 
-        _text.color = new Color(_r, _g, _b, _a);   
+        _text.color = new Color(_r, _g, _b, _a);
     }
 }

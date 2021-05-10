@@ -33,6 +33,7 @@ public class RoodleController : MonoBehaviour
         _currentMousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         ActiveRoodle.FlyEffect.SetActive(true);
         _scoreCounter.NewStageReached += OnReachedNewStage;
+        _sensitivity = DataStorage.GetSens();
     }
 
 

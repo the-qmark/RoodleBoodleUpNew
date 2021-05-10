@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DataStorage : MonoBehaviour
 {
+    private const string SENS = "Sensitivity";
+    private const string VOLUME = "Volume";
     private const string MAX_SCORE = "MaxScore";
     private const string ACTIVE_ROODLE = "ActiveRoodle";
     private const string COINS = "Coins";
@@ -11,6 +13,12 @@ public class DataStorage : MonoBehaviour
     
     void Awake()
     {
+        if (!PlayerPrefs.HasKey(SENS))
+            PlayerPrefs.SetInt(SENS, 200);
+
+        if (!PlayerPrefs.HasKey(VOLUME))
+            PlayerPrefs.SetInt(VOLUME, 50);
+
         if (!PlayerPrefs.HasKey(MAX_SCORE))
             PlayerPrefs.SetInt(MAX_SCORE, 0);
 
@@ -62,5 +70,25 @@ public class DataStorage : MonoBehaviour
     public static int GetCoinsCount()
     {
         return PlayerPrefs.GetInt(COINS);
+    }
+
+    public static void SetSens(int _sens)
+    {
+        PlayerPrefs.SetInt(SENS, _sens);
+    }
+
+    public static int GetSens()
+    {
+        return PlayerPrefs.GetInt(SENS);
+    }
+
+    public static void SetVolume(int _vol)
+    {
+        PlayerPrefs.SetInt(VOLUME, _vol);
+    }
+
+    public static int GetVolume()
+    {
+        return PlayerPrefs.GetInt(VOLUME);
     }
 }

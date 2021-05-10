@@ -9,14 +9,4 @@ public class ScriptableText : ScriptableObject
     //public Color Color;
     public Material material;
 
-    void Start()
-    {
-        
-    }
-
-    
-    void Update()
-    {
-        
-    }
 }
